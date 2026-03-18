@@ -4,7 +4,7 @@ Retrieve all wallet transactions for the authenticated user. Returns transaction
 
 ## Endpoint
 
-`GET /wallet/fetchtransactions`
+`POST /wallet/fetchtransactions`
 
 ## Description
 
@@ -19,7 +19,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 ### cURL
 
 ```bash
-curl -X GET "https://api-v3.sweeppea.com/wallet/fetchtransactions" \
+curl -X POST "https://api-v3.sweeppea.com/wallet/fetchtransactions" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json"
 ```
@@ -28,7 +28,7 @@ curl -X GET "https://api-v3.sweeppea.com/wallet/fetchtransactions" \
 
 ```javascript
 const response = await fetch('https://api-v3.sweeppea.com/wallet/fetchtransactions', {
-  method: 'GET',
+  method: 'POST',
   headers: {
     'Authorization': 'Bearer YOUR_API_KEY',
     'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ headers = {
     "Content-Type": "application/json"
 }
 
-response = requests.get(url, headers=headers)
+response = requests.post(url, headers=headers)
 print(response.json())
 ```
 

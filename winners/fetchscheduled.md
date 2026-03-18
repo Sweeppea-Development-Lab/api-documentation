@@ -4,7 +4,7 @@ Retrieve all scheduled winner drawings for a specific sweepstakes.
 
 ## Endpoint
 
-`GET /winners/fetchscheduled`
+`POST /winners/fetchscheduled`
 
 ## Description
 
@@ -16,29 +16,35 @@ This endpoint allows you to fetch all scheduled drawings for a specific sweepsta
 - Results are sorted by creation date (newest first)
 - Includes all scheduled drawings regardless of status
 
-## Request Parameters
+## Request Body
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `sweepstakesToken` | String (UUID v4) | Required | The unique identifier of the sweepstakes (query string parameter) |
+| `SweepstakesToken` | String (UUID v4) | Required | The unique identifier of the sweepstakes |
 
 ## Code Examples
 
 ### cURL
 
 ```bash
-curl -X GET "https://api-v3.sweeppea.com/winners/fetchscheduled?sweepstakesToken=uuid-v4-string" \
-  -H "Authorization: Bearer YOUR_API_KEY"
+curl -X POST "https://api-v3.sweeppea.com/winners/fetchscheduled" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"SweepstakesToken": "uuid-v4-string"}'
 ```
 
 ### JavaScript
 
 ```javascript
-const response = await fetch('https://api-v3.sweeppea.com/winners/fetchscheduled?sweepstakesToken=uuid-v4-string', {
-  method: 'GET',
+const response = await fetch('https://api-v3.sweeppea.com/winners/fetchscheduled', {
+  method: 'POST',
   headers: {
-    'Authorization': 'Bearer YOUR_API_KEY'
-  }
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    SweepstakesToken: 'uuid-v4-string'
+  })
 });
 
 const data = await response.json();
@@ -52,13 +58,14 @@ import requests
 
 url = "https://api-v3.sweeppea.com/winners/fetchscheduled"
 headers = {
-    "Authorization": "Bearer YOUR_API_KEY"
+    "Authorization": "Bearer YOUR_API_KEY",
+    "Content-Type": "application/json"
 }
-params = {
-    "sweepstakesToken": "uuid-v4-string"
+payload = {
+    "SweepstakesToken": "uuid-v4-string"
 }
 
-response = requests.get(url, headers=headers, params=params)
+response = requests.post(url, headers=headers, json=payload)
 print(response.json())
 ```
 
@@ -124,7 +131,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Missing sweepstakesToken query parameter",
+  "Message": "Missing SweepstakesToken in request body",
   "Code": 400
 }
 ```

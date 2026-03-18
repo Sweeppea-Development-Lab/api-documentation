@@ -4,7 +4,7 @@ Retrieve monthly and yearly consumption totals for the authenticated user. Retur
 
 ## Endpoint
 
-`GET /billing/consumptions`
+`POST /billing/consumptions`
 
 ## Description
 
@@ -19,7 +19,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 ### cURL
 
 ```bash
-curl -X GET "https://api-v3.sweeppea.com/billing/consumptions" \
+curl -X POST "https://api-v3.sweeppea.com/billing/consumptions" \
   -H "Authorization: Bearer uuid-v4-string" \
   -H "Content-Type: application/json"
 ```
@@ -28,7 +28,7 @@ curl -X GET "https://api-v3.sweeppea.com/billing/consumptions" \
 
 ```javascript
 const response = await fetch('https://api-v3.sweeppea.com/billing/consumptions', {
-  method: 'GET',
+  method: 'POST',
   headers: {
     'Authorization': 'Bearer uuid-v4-string',
     'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ headers = {
     "Content-Type": "application/json"
 }
 
-response = requests.get(url, headers=headers)
+response = requests.post(url, headers=headers)
 print(response.json())
 ```
 
