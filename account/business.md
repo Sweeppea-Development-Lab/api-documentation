@@ -63,9 +63,15 @@ print(response.json())
     "BusinessCountry": "string",
     "BusinessWebsite": "string",
     "EIN": "string"
+  },
+  "Telemetry": {
+    "DataConsumed": 0,
+    "APICalls": 142,
+    "MaxAPICalls": 500000
   }
 }
 ```
+
 
 **401 Unauthorized**
 

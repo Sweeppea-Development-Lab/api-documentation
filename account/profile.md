@@ -73,9 +73,15 @@ print(response.json())
       "Avatar": "string",
       "BirthDate": "2024-01-01T00:00:00.000Z"
     }
+  },
+  "Telemetry": {
+    "DataConsumed": 0,
+    "APICalls": 142,
+    "MaxAPICalls": 500000
   }
 }
 ```
+
 
 **401 Unauthorized**
 

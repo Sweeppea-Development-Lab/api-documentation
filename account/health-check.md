@@ -53,9 +53,15 @@ print(response.json())
 ```json
 {
   "Response": true,
-  "Message": "API is healthy"
+  "Message": "API is healthy",
+  "Telemetry": {
+    "DataConsumed": 0,
+    "APICalls": 142,
+    "MaxAPICalls": 500000
+  }
 }
 ```
+
 
 **401 Unauthorized**
 

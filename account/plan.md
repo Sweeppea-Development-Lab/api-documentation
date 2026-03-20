@@ -107,9 +107,15 @@ print(response.json())
     "Primary": false,
     "Locked": true,
     "CreationDate": "2025-06-02T01:30:10.261Z"
+  },
+  "Telemetry": {
+    "DataConsumed": 0,
+    "APICalls": 142,
+    "MaxAPICalls": 500000
   }
 }
 ```
+
 
 **401 Unauthorized**
 
