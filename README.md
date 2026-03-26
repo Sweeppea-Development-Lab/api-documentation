@@ -117,6 +117,7 @@ Sweeppea Renaissance includes a full **Model Context Protocol (MCP) Server** imp
 | [participants/fetch-group](participants/fetch-group.md) | POST | Fetch participant groups |
 | [participants/update-group](participants/update-group.md) | POST | Update a participant group |
 | [participants/delete-group](participants/delete-group.md) | POST | Delete a participant group |
+| [participants/update-bonus-entries](participants/update-bonus-entries.md) | POST | Update bonus entries for a participant |
 
 ### Rules
 | Endpoint | Method | Description |
