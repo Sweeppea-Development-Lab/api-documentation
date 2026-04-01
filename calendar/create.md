@@ -40,7 +40,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `EventColor` | string | No | `#6CD9FF` | Event color in hex |
 | `EventAllDay` | boolean | No | `false` | All day event flag |
 | `EventStatus` | boolean | No | `false` | Event status (busy/free) |
-| `PrivateEvent` | boolean | No | `false` | Private event flag |
+| `PrivateEvent` | boolean | — | `true` (hardcoded) | Always `true` for API v3 events — admins cannot see them. Use the calendar UI to make an event public. |
 | `SMSNotification` | boolean | No | `false` | SMS notification flag |
 | `Completed` | boolean | No | `false` | Completion status |
 | `SweepstakesToken` | string | No | `""` | Associated sweepstakes token |
@@ -62,7 +62,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
   "EventColor": "#FF5733",
   "EventAllDay": false,
   "EventStatus": false,
-  "PrivateEvent": false,
+  "PrivateEvent": true,
   "SMSNotification": false,
   "Completed": false
 }
