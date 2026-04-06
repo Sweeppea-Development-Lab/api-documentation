@@ -10,10 +10,6 @@ Permanently delete a To-Do item. Admin access required.
 
 This endpoint permanently deletes a To-Do item identified by its `TodoToken`. It is restricted to admin users only. This action cannot be undone — the document is removed from the database immediately upon success.
 
-## ⚠️ Warning
-
-**This action is permanent and cannot be undone.** Once deleted, the To-Do record is removed from the database and cannot be recovered.
-
 ## Authentication & Authorization
 
 This endpoint is restricted to administrator accounts. Regular users will receive a `403 Forbidden` response.
