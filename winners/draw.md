@@ -21,12 +21,12 @@ This endpoint allows you to draw winners from your sweepstakes using a weighted 
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `sweepstakesToken` | String | Required | The unique identifier of the sweepstakes |
-| `howManyWinnersToPick` | Number | Required | Number of winners to select |
-| `group` | String | Required | Group token or `"allgroups"` to include all participants |
-| `completedEntries` | Boolean | Optional | Filter to only completed entries |
-| `includeOptedOutParticipants` | Boolean | Optional | Include opted-out participants in the drawing |
-| `doNotIncludeSpamParticipants` | Boolean | Optional | Exclude participants flagged as spam |
+| `sweepstakesToken` | String (UUID v4) | Yes | Unique identifier of the sweepstakes |
+| `howManyWinnersToPick` | Number | No | Number of winners to select (default: 1) |
+| `group` | String | No | Group token to limit the draw to a specific group, or `"allgroups"` to include all participants (default: `"allgroups"`) |
+| `completedEntries` | Boolean | No | Only include participants who completed all bonus entry steps (default: false) |
+| `includeOptedOutParticipants` | Boolean | No | Include participants who opted out of notifications (default: false) |
+| `doNotIncludeSpamParticipants` | Boolean | No | Exclude participants flagged as spam (default: false) |
 
 ## Request Example
 

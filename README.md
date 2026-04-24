@@ -90,6 +90,16 @@ Sweeppea Renaissance includes a full **Model Context Protocol (MCP) Server** imp
 | [entrypage/fetch](entrypage/fetch.md) | POST | Fetch entry page config |
 | [entrypage/fields](entrypage/fields.md) | POST | Fetch entry page fields |
 | [entrypage/settings](entrypage/settings.md) | POST | Fetch entry page settings |
+| [entrypage/update](entrypage/update.md) | POST | Update entry page settings (1–5 fields per request) |
+
+### Files (Drive)
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| [files/upload](files/upload.md) | POST | Upload a file to the user's Drive |
+| [files/fetch](files/fetch.md) | POST | Fetch all files with storage usage and pagination |
+| [files/getFileUrl](files/geturl.md) | POST | Generate a short-lived presigned S3 URL to preview or download a file |
+| [files/delete](files/delete.md) | POST | Permanently delete a file |
+| [files/send](files/send.md) | POST | Send a file by email as an attachment |
 
 ### Help & Support Articles
 | Endpoint | Method | Description |
@@ -136,7 +146,6 @@ Sweeppea Renaissance includes a full **Model Context Protocol (MCP) Server** imp
 | [support/closed](support/closed.md) | POST | Fetch closed tickets |
 | [support/single](support/single.md) | POST | Fetch a single ticket |
 | [support/update](support/update.md) | POST | Update a ticket |
-| [support/close](support/close.md) | POST | Close a ticket |
 | [support/resolve](support/resolve.md) | POST | Resolve a ticket |
 | [support/delete](support/delete.md) | POST | Delete a ticket |
 
@@ -150,8 +159,6 @@ Sweeppea Renaissance includes a full **Model Context Protocol (MCP) Server** imp
 | [sweepstakes/clone](sweepstakes/clone.md) | POST | Clone a sweepstakes |
 | [sweepstakes/pause](sweepstakes/pause.md) | POST | Pause a sweepstakes |
 | [sweepstakes/unpause](sweepstakes/unpause.md) | POST | Unpause a sweepstakes |
-| [sweepstakes/archive](sweepstakes/archive.md) | POST | Archive a sweepstakes |
-| [sweepstakes/unarchive](sweepstakes/unarchive.md) | POST | Unarchive a sweepstakes |
 
 ### Todos
 | Endpoint | Method | Description |
