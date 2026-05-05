@@ -21,16 +21,16 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 
 ## Request Parameters
 
-| Parameter                        | Type   | Required | Description                                                   |
-|----------------------------------|--------|----------|---------------------------------------------------------------|
-| `lang`                           | String | Yes      | Language code (e.g., `"EN"`)                                  |
-| `source`                         | String | Yes      | Entry source (e.g., `"api"`)                                  |
-| `sweepstakesToken`               | String | Yes      | UUID v4 identifier for the sweepstakes                        |
-| `entryPageFields`                | Object | Yes      | Object containing all entry page field data                   |
-| `entryPageFields.KeyPhoneNumber` | String | No       | Participant's phone number                                    |
-| `entryPageFields.KeyEmail`       | String | No       | Participant's email address                                   |
-| `entryPageFields.BonusEntries`   | Number | No       | Number of bonus entries (default: 0)                          |
-| `entryPageFields.Fields`         | Object | Yes      | Object containing the participant's entry page field values   |
+| Parameter                        | Type   | Required | Description                                                                                            |
+|----------------------------------|--------|----------|--------------------------------------------------------------------------------------------------------|
+| `lang`                           | String | Yes      | Language code, max 2 characters (e.g., `"EN"`)                                                         |
+| `source`                         | String | Yes      | Entry source, max 100 characters (e.g., `"api"`)                                                       |
+| `sweepstakesToken`               | String | Yes      | UUID v4 identifier for the sweepstakes                                                                 |
+| `entryPageFields`                | Object | Yes      | Object containing all entry page field data                                                            |
+| `entryPageFields.KeyPhoneNumber` | String | Yes      | Participant's phone number. Must be exactly 10 digits (US format, no country code, no separators).    |
+| `entryPageFields.KeyEmail`       | String | Yes      | Participant's email address. Length between 5 and 100 characters.                                     |
+| `entryPageFields.BonusEntries`   | Number | No       | Number of bonus entries (default: 0)                                                                   |
+| `entryPageFields.Fields`         | Object | Yes      | Object containing the participant's entry page field values                                            |
 
 ## Request Example
 
