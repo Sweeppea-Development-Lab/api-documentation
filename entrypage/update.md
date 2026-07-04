@@ -74,6 +74,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `EnableProgressBar` | Boolean |  |
 | `EnableSweepstakesCountdown` | Boolean |  |
 | `EnableNumberOfParticipants` | Boolean |  |
+| `ShowSweeppeaBranding` | Boolean | White-label mode. `true` (default) shows the "Made with Sweeppea" link on the entry page and AMOE form. Setting it to `false` hides the branding and requires an active paid plan (returns `403` otherwise). |
 | `EnableSocialWidget` | Boolean |  |
 | `FollowFacebookSwitch` | Boolean |  |
 | `FollowXSwitch` | Boolean |  |
