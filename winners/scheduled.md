@@ -22,45 +22,47 @@ This endpoint allows you to schedule a winner drawing for your sweepstakes. You 
 
 ## Request Parameters
 
+> **Parameter Casing:** All request parameters are `PascalCase`. For backward compatibility, `camelCase` equivalents (e.g. `sweepstakesToken`) are also accepted.
+
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `sweepstakesToken` | String (UUID v4) | Required | The unique identifier of the sweepstakes |
-| `group` | String | Required | Group token or `"allgroups"` to include all participants |
-| `selectedAction` | Number | Required | Action type: `1` = Draw Winners, `2` = Draw Winners & Notify |
-| `scheduleMode` | String | Required | `"schedule"` for specific date/time or `"settime"` for period of time |
-| `howManyWinnersToPick` | Number | Required | Number of winners to select (must be >= 1) |
-| `frequency` | Number | Optional | `0`=None, `1`=Hourly, `2`=Daily, `3`=Weekly, `4`=Monthly |
-| `dayOfTheWeek` | Number | Optional | `1`=Sunday, `2`=Monday, ..., `7`=Saturday (for weekly/monthly) |
-| `weekOfTheMonth` | Number | Optional | `1`=1st, `2`=2nd, `3`=3rd, `4`=4th week (for monthly frequency) |
-| `endDate` | Date | Required | Drawing date (for schedule mode) or end date (for settime mode) |
-| `endTime` | String | Required | Drawing time in HH:mm format |
-| `deliveryTime` | String | Optional | Delivery time for settime mode |
-| `timezone` | Number | Required | Timezone ID (integer) for the scheduled drawing |
-| `message` | String | Optional | Message to send to winners (for action 2) |
-| `includeOptedOutParticipants` | Boolean | Optional | Include opted-out participants in drawing |
-| `publishToWinnersPage` | Boolean | Optional | Publish winners to public winners page |
-| `sendCopyToMe` | Boolean | Optional | Send a copy of notification to account owner |
-| `doNotIncludeSpamParticipants` | Boolean | Optional | Exclude participants flagged as spam |
-| `addDrawingToCalendar` | Boolean | Optional | Add scheduled drawing to calendar |
+| `SweepstakesToken` | String (UUID v4) | Required | The unique identifier of the sweepstakes |
+| `Group` | String | Required | Group token or `"allgroups"` to include all participants |
+| `SelectedAction` | Number | Required | Action type: `1` = Draw Winners, `2` = Draw Winners & Notify |
+| `ScheduleMode` | String | Required | `"schedule"` for specific date/time or `"settime"` for period of time |
+| `HowManyWinnersToPick` | Number | Required | Number of winners to select (must be >= 1) |
+| `Frequency` | Number | Optional | `0`=None, `1`=Hourly, `2`=Daily, `3`=Weekly, `4`=Monthly |
+| `DayOfTheWeek` | Number | Optional | `1`=Sunday, `2`=Monday, ..., `7`=Saturday (for weekly/monthly) |
+| `WeekOfTheMonth` | Number | Optional | `1`=1st, `2`=2nd, `3`=3rd, `4`=4th week (for monthly frequency) |
+| `EndDate` | Date | Required | Drawing date (for schedule mode) or end date (for settime mode) |
+| `EndTime` | String | Required | Drawing time in HH:mm format |
+| `DeliveryTime` | String | Optional | Delivery time for settime mode |
+| `Timezone` | Number | Required | Timezone ID (integer) for the scheduled drawing |
+| `Message` | String | Optional | Message to send to winners (for action 2) |
+| `IncludeOptedOutParticipants` | Boolean | Optional | Include opted-out participants in drawing |
+| `PublishToWinnersPage` | Boolean | Optional | Publish winners to public winners page |
+| `SendCopyToMe` | Boolean | Optional | Send a copy of notification to account owner |
+| `DoNotIncludeSpamParticipants` | Boolean | Optional | Exclude participants flagged as spam |
+| `AddDrawingToCalendar` | Boolean | Optional | Add scheduled drawing to calendar |
 
 ## Request Example
 
 ```json
 {
-  "sweepstakesToken": "uuid-v4-string",
-  "group": "allgroups",
-  "selectedAction": 1,
-  "scheduleMode": "schedule",
-  "howManyWinnersToPick": 1,
-  "frequency": 0,
-  "endDate": "2025-02-15",
-  "endTime": "15:00",
-  "timezone": 1,
-  "includeOptedOutParticipants": false,
-  "publishToWinnersPage": false,
-  "sendCopyToMe": false,
-  "doNotIncludeSpamParticipants": true,
-  "addDrawingToCalendar": true
+  "SweepstakesToken": "uuid-v4-string",
+  "Group": "allgroups",
+  "SelectedAction": 1,
+  "ScheduleMode": "schedule",
+  "HowManyWinnersToPick": 1,
+  "Frequency": 0,
+  "EndDate": "2025-02-15",
+  "EndTime": "15:00",
+  "Timezone": 1,
+  "IncludeOptedOutParticipants": false,
+  "PublishToWinnersPage": false,
+  "SendCopyToMe": false,
+  "DoNotIncludeSpamParticipants": true,
+  "AddDrawingToCalendar": true
 }
 ```
 
@@ -73,20 +75,20 @@ curl -X POST "https://api-v3.sweeppea.com/winners/schedule" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "sweepstakesToken": "uuid-v4-string",
-    "group": "allgroups",
-    "selectedAction": 1,
-    "scheduleMode": "schedule",
-    "howManyWinnersToPick": 1,
-    "frequency": 0,
-    "endDate": "2025-02-15",
-    "endTime": "15:00",
-    "timezone": 1,
-    "includeOptedOutParticipants": false,
-    "publishToWinnersPage": false,
-    "sendCopyToMe": false,
-    "doNotIncludeSpamParticipants": true,
-    "addDrawingToCalendar": true
+    "SweepstakesToken": "uuid-v4-string",
+    "Group": "allgroups",
+    "SelectedAction": 1,
+    "ScheduleMode": "schedule",
+    "HowManyWinnersToPick": 1,
+    "Frequency": 0,
+    "EndDate": "2025-02-15",
+    "EndTime": "15:00",
+    "Timezone": 1,
+    "IncludeOptedOutParticipants": false,
+    "PublishToWinnersPage": false,
+    "SendCopyToMe": false,
+    "DoNotIncludeSpamParticipants": true,
+    "AddDrawingToCalendar": true
   }'
 ```
 
@@ -100,20 +102,20 @@ const response = await fetch('https://api-v3.sweeppea.com/winners/schedule', {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    sweepstakesToken: "uuid-v4-string",
-    group: "allgroups",
-    selectedAction: 1,
-    scheduleMode: "schedule",
-    howManyWinnersToPick: 1,
-    frequency: 0,
-    endDate: "2025-02-15",
-    endTime: "15:00",
-    timezone: 1,
-    includeOptedOutParticipants: false,
-    publishToWinnersPage: false,
-    sendCopyToMe: false,
-    doNotIncludeSpamParticipants: true,
-    addDrawingToCalendar: true
+    SweepstakesToken: "uuid-v4-string",
+    Group: "allgroups",
+    SelectedAction: 1,
+    ScheduleMode: "schedule",
+    HowManyWinnersToPick: 1,
+    Frequency: 0,
+    EndDate: "2025-02-15",
+    EndTime: "15:00",
+    Timezone: 1,
+    IncludeOptedOutParticipants: false,
+    PublishToWinnersPage: false,
+    SendCopyToMe: false,
+    DoNotIncludeSpamParticipants: true,
+    AddDrawingToCalendar: true
   })
 });
 
@@ -132,20 +134,20 @@ headers = {
     "Content-Type": "application/json"
 }
 data = {
-    "sweepstakesToken": "uuid-v4-string",
-    "group": "allgroups",
-    "selectedAction": 1,
-    "scheduleMode": "schedule",
-    "howManyWinnersToPick": 1,
-    "frequency": 0,
-    "endDate": "2025-02-15",
-    "endTime": "15:00",
-    "timezone": 1,
-    "includeOptedOutParticipants": False,
-    "publishToWinnersPage": False,
-    "sendCopyToMe": False,
-    "doNotIncludeSpamParticipants": True,
-    "addDrawingToCalendar": True
+    "SweepstakesToken": "uuid-v4-string",
+    "Group": "allgroups",
+    "SelectedAction": 1,
+    "ScheduleMode": "schedule",
+    "HowManyWinnersToPick": 1,
+    "Frequency": 0,
+    "EndDate": "2025-02-15",
+    "EndTime": "15:00",
+    "Timezone": 1,
+    "IncludeOptedOutParticipants": False,
+    "PublishToWinnersPage": False,
+    "SendCopyToMe": False,
+    "DoNotIncludeSpamParticipants": True,
+    "AddDrawingToCalendar": True
 }
 
 response = requests.post(url, headers=headers, json=data)
@@ -229,7 +231,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid howManyWinnersToPick parameter. Must be at least 1.",
+  "Message": "Invalid HowManyWinnersToPick parameter. Must be at least 1.",
   "Code": 400
 }
 ```

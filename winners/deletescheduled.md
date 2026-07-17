@@ -19,17 +19,19 @@ This endpoint allows you to delete a scheduled drawing that is in pending status
 
 ## Request Parameters
 
+> **Parameter Casing:** All request parameters are `PascalCase`. For backward compatibility, `camelCase` equivalents (e.g. `sweepstakesToken`) are also accepted.
+
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `sweepstakesToken` | String (UUID v4) | Required | The unique identifier of the sweepstakes |
-| `scheduleToken` | String (UUID v4) | Required | The unique identifier of the scheduled drawing to delete |
+| `SweepstakesToken` | String (UUID v4) | Required | The unique identifier of the sweepstakes |
+| `ScheduleToken` | String (UUID v4) | Required | The unique identifier of the scheduled drawing to delete |
 
 ## Request Example
 
 ```json
 {
-  "sweepstakesToken": "uuid-v4-string",
-  "scheduleToken": "uuid-v4-string"
+  "SweepstakesToken": "uuid-v4-string",
+  "ScheduleToken": "uuid-v4-string"
 }
 ```
 
@@ -42,8 +44,8 @@ curl -X DELETE "https://api-v3.sweeppea.com/winners/deletescheduled" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "sweepstakesToken": "uuid-v4-string",
-    "scheduleToken": "uuid-v4-string"
+    "SweepstakesToken": "uuid-v4-string",
+    "ScheduleToken": "uuid-v4-string"
   }'
 ```
 
@@ -57,8 +59,8 @@ const response = await fetch('https://api-v3.sweeppea.com/winners/deleteschedule
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    sweepstakesToken: "uuid-v4-string",
-    scheduleToken: "uuid-v4-string"
+    SweepstakesToken: "uuid-v4-string",
+    ScheduleToken: "uuid-v4-string"
   })
 });
 
@@ -77,8 +79,8 @@ headers = {
     "Content-Type": "application/json"
 }
 data = {
-    "sweepstakesToken": "uuid-v4-string",
-    "scheduleToken": "uuid-v4-string"
+    "SweepstakesToken": "uuid-v4-string",
+    "ScheduleToken": "uuid-v4-string"
 }
 
 response = requests.delete(url, headers=headers, json=data)
@@ -117,7 +119,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Missing sweepstakesToken or scheduleToken in request body",
+  "Message": "Missing SweepstakesToken or ScheduleToken in request body",
   "Code": 400
 }
 ```

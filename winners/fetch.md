@@ -21,21 +21,23 @@ This endpoint allows you to fetch all winners from your sweepstakes. You can pag
 
 ## Request Parameters
 
+> **Parameter Casing:** All request parameters are `PascalCase`. For backward compatibility, `camelCase` equivalents (e.g. `sweepstakesToken`) are also accepted.
+
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `sweepstakesToken` | String | Required | The unique identifier of the sweepstakes |
-| `page` | Number | Optional | Page number for pagination (default: 1) |
-| `itemsPerPage` | Number | Optional | Number of items per page (default: 10) |
-| `search` | String | Optional | Search term to filter by email or phone number |
+| `SweepstakesToken` | String | Required | The unique identifier of the sweepstakes |
+| `Page` | Number | Optional | Page number for pagination (default: 1) |
+| `ItemsPerPage` | Number | Optional | Number of items per page (default: 10) |
+| `Search` | String | Optional | Search term to filter by email or phone number |
 
 ## Request Example
 
 ```json
 {
-  "sweepstakesToken": "uuid-v4-string",
-  "page": 1,
-  "itemsPerPage": 10,
-  "search": ""
+  "SweepstakesToken": "uuid-v4-string",
+  "Page": 1,
+  "ItemsPerPage": 10,
+  "Search": ""
 }
 ```
 
@@ -48,10 +50,10 @@ curl -X POST "https://api-v3.sweeppea.com/winners/fetch" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "sweepstakesToken": "uuid-v4-string",
-    "page": 1,
-    "itemsPerPage": 10,
-    "search": ""
+    "SweepstakesToken": "uuid-v4-string",
+    "Page": 1,
+    "ItemsPerPage": 10,
+    "Search": ""
   }'
 ```
 
@@ -65,10 +67,10 @@ const response = await fetch('https://api-v3.sweeppea.com/winners/fetch', {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    sweepstakesToken: "uuid-v4-string",
-    page: 1,
-    itemsPerPage: 10,
-    search: ""
+    SweepstakesToken: "uuid-v4-string",
+    Page: 1,
+    ItemsPerPage: 10,
+    Search: ""
   })
 });
 
@@ -87,10 +89,10 @@ headers = {
     "Content-Type": "application/json"
 }
 data = {
-    "sweepstakesToken": "uuid-v4-string",
-    "page": 1,
-    "itemsPerPage": 10,
-    "search": ""
+    "SweepstakesToken": "uuid-v4-string",
+    "Page": 1,
+    "ItemsPerPage": 10,
+    "Search": ""
 }
 
 response = requests.post(url, headers=headers, json=data)

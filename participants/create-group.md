@@ -16,17 +16,19 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 
 ## Request Parameters
 
+> **Parameter Casing:** All request parameters are `PascalCase`. For backward compatibility, `camelCase` equivalents (e.g. `sweepstakesToken`) are also accepted.
+
 | Parameter          | Type             | Required | Description                                                             |
 |--------------------|------------------|----------|-------------------------------------------------------------------------|
-| `sweepstakesToken` | String (UUID v4) | Yes      | The UUID token of the sweepstakes where the group will be created       |
-| `groupName`        | String           | Yes      | The name of the group (must be unique within the sweepstakes)           |
+| `SweepstakesToken` | String (UUID v4) | Yes      | The UUID token of the sweepstakes where the group will be created       |
+| `GroupName`        | String           | Yes      | The name of the group (must be unique within the sweepstakes)           |
 
 ## Request Example
 
 ```json
 {
-  "sweepstakesToken": "uuid-v4-string",
-  "groupName": "VIP Members"
+  "SweepstakesToken": "uuid-v4-string",
+  "GroupName": "VIP Members"
 }
 ```
 
@@ -39,8 +41,8 @@ curl -X POST "https://api-v3.sweeppea.com/groups/create" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "sweepstakesToken": "uuid-v4-string",
-    "groupName": "VIP Members"
+    "SweepstakesToken": "uuid-v4-string",
+    "GroupName": "VIP Members"
   }'
 ```
 
@@ -54,8 +56,8 @@ const response = await fetch('https://api-v3.sweeppea.com/groups/create', {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    sweepstakesToken: "uuid-v4-string",
-    groupName: "VIP Members"
+    SweepstakesToken: "uuid-v4-string",
+    GroupName: "VIP Members"
   })
 });
 
@@ -74,8 +76,8 @@ headers = {
     "Content-Type": "application/json"
 }
 data = {
-    "sweepstakesToken": "uuid-v4-string",
-    "groupName": "VIP Members"
+    "SweepstakesToken": "uuid-v4-string",
+    "GroupName": "VIP Members"
 }
 
 response = requests.post(url, headers=headers, json=data)
@@ -106,7 +108,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Missing required parameters: sweepstakesToken and groupName"
+  "Message": "Missing required parameters: SweepstakesToken and GroupName"
 }
 ```
 

@@ -21,25 +21,27 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 
 ## Request Parameters
 
+> **Parameter Casing:** All request parameters are `PascalCase`. For backward compatibility, `camelCase` equivalents (e.g. `sweepstakesToken`) are also accepted.
+
 | Parameter                        | Type   | Required | Description                                                                                            |
 |----------------------------------|--------|----------|--------------------------------------------------------------------------------------------------------|
-| `lang`                           | String | Yes      | Language code, max 2 characters (e.g., `"EN"`)                                                         |
-| `source`                         | String | Yes      | Entry source, max 100 characters (e.g., `"api"`)                                                       |
-| `sweepstakesToken`               | String | Yes      | UUID v4 identifier for the sweepstakes                                                                 |
-| `entryPageFields`                | Object | Yes      | Object containing all entry page field data                                                            |
-| `entryPageFields.KeyPhoneNumber` | String | Yes      | Participant's phone number. Must be exactly 10 digits (US format, no country code, no separators).    |
-| `entryPageFields.KeyEmail`       | String | Yes      | Participant's email address. Length between 5 and 100 characters.                                     |
-| `entryPageFields.BonusEntries`   | Number | No       | Number of bonus entries (default: 0)                                                                   |
-| `entryPageFields.Fields`         | Object | Yes      | Object containing the participant's entry page field values                                            |
+| `Lang`                           | String | Yes      | Language code, max 2 characters (e.g., `"EN"`)                                                         |
+| `Source`                         | String | Yes      | Entry source, max 100 characters (e.g., `"api"`)                                                       |
+| `SweepstakesToken`               | String | Yes      | UUID v4 identifier for the sweepstakes                                                                 |
+| `EntryPageFields`                | Object | Yes      | Object containing all entry page field data                                                            |
+| `EntryPageFields.KeyPhoneNumber` | String | Yes      | Participant's phone number. Must be exactly 10 digits (US format, no country code, no separators).    |
+| `EntryPageFields.KeyEmail`       | String | Yes      | Participant's email address. Length between 5 and 100 characters.                                     |
+| `EntryPageFields.BonusEntries`   | Number | No       | Number of bonus entries (default: 0)                                                                   |
+| `EntryPageFields.Fields`         | Object | Yes      | Object containing the participant's entry page field values                                            |
 
 ## Request Example
 
 ```json
 {
-  "lang": "EN",
-  "source": "api",
-  "sweepstakesToken": "uuid-v4-string",
-  "entryPageFields": {
+  "Lang": "EN",
+  "Source": "api",
+  "SweepstakesToken": "uuid-v4-string",
+  "EntryPageFields": {
     "KeyPhoneNumber": "5551234567",
     "KeyEmail": "john.doe@example.com",
     "BonusEntries": 0,
@@ -62,10 +64,10 @@ curl -X POST "https://api-v3.sweeppea.com/participants/add" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "lang": "EN",
-    "source": "api",
-    "sweepstakesToken": "uuid-v4-string",
-    "entryPageFields": {
+    "Lang": "EN",
+    "Source": "api",
+    "SweepstakesToken": "uuid-v4-string",
+    "EntryPageFields": {
       "KeyPhoneNumber": "5551234567",
       "KeyEmail": "john.doe@example.com",
       "BonusEntries": 0,
@@ -89,10 +91,10 @@ const response = await fetch('https://api-v3.sweeppea.com/participants/add', {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    lang: "EN",
-    source: "api",
-    sweepstakesToken: "uuid-v4-string",
-    entryPageFields: {
+    Lang: "EN",
+    Source: "api",
+    SweepstakesToken: "uuid-v4-string",
+    EntryPageFields: {
       KeyPhoneNumber: "5551234567",
       KeyEmail: "john.doe@example.com",
       BonusEntries: 0,
@@ -121,10 +123,10 @@ headers = {
     "Content-Type": "application/json"
 }
 data = {
-    "lang": "EN",
-    "source": "api",
-    "sweepstakesToken": "uuid-v4-string",
-    "entryPageFields": {
+    "Lang": "EN",
+    "Source": "api",
+    "SweepstakesToken": "uuid-v4-string",
+    "EntryPageFields": {
         "KeyPhoneNumber": "5551234567",
         "KeyEmail": "john.doe@example.com",
         "BonusEntries": 0,
@@ -148,6 +150,9 @@ print(response.json())
 ```json
 {
   "Response": true,
+  "Data": {
+    "ParticipantToken": "uuid-v4-string"
+  },
   "Message": "(OK) Participant successfully added to your sweepstakes."
 }
 ```

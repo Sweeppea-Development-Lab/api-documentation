@@ -16,11 +16,13 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 
 ## Request Parameters
 
+> **Parameter Casing:** All request parameters are `PascalCase`. For backward compatibility, `camelCase` equivalents (e.g. `sweepstakesToken`) are also accepted.
+
 | Parameter          | Type              | Required | Description                                                                               |
 |--------------------|-------------------|----------|-------------------------------------------------------------------------------------------|
-| `sweepstakesToken` | String (UUID v4)  | Yes      | Unique identifier for the sweepstakes                                                     |
-| `page`             | Number            | No       | Page number for pagination (default: 1)                                                   |
-| `search`           | String            | No       | Search term to filter by first name, last name, email, or phone number (case-insensitive) |
+| `SweepstakesToken` | String (UUID v4)  | Yes      | Unique identifier for the sweepstakes                                                     |
+| `Page`             | Number            | No       | Page number for pagination (default: 1)                                                   |
+| `Search`           | String            | No       | Search term to filter by first name, last name, email, or phone number (case-insensitive) |
 | `optInDate`        | Date (YYYY-MM-DD) | No       | Filter participants by specific opt-in date                                               |
 | `startDate`        | Date (YYYY-MM-DD) | No       | Filter participants from this date (requires `endDate`)                                   |
 | `endDate`          | Date (YYYY-MM-DD) | No       | Filter participants until this date (requires `startDate`)                                |
@@ -29,9 +31,9 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 
 ```json
 {
-  "sweepstakesToken": "uuid-v4-string",
-  "page": 1,
-  "search": "john",
+  "SweepstakesToken": "uuid-v4-string",
+  "Page": 1,
+  "Search": "john",
   "startDate": "2025-01-01",
   "endDate": "2025-01-31"
 }
@@ -46,9 +48,9 @@ curl -X POST "https://api-v3.sweeppea.com/participants/fetch" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "sweepstakesToken": "uuid-v4-string",
-    "page": 1,
-    "search": "john",
+    "SweepstakesToken": "uuid-v4-string",
+    "Page": 1,
+    "Search": "john",
     "startDate": "2025-01-01",
     "endDate": "2025-01-31"
   }'
@@ -64,9 +66,9 @@ const response = await fetch('https://api-v3.sweeppea.com/participants/fetch', {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    sweepstakesToken: 'uuid-v4-string',
-    page: 1,
-    search: 'john',
+    SweepstakesToken: 'uuid-v4-string',
+    Page: 1,
+    Search: 'john',
     startDate: '2025-01-01',
     endDate: '2025-01-31'
   })
@@ -88,9 +90,9 @@ headers = {
     "Content-Type": "application/json"
 }
 payload = {
-    "sweepstakesToken": "uuid-v4-string",
-    "page": 1,
-    "search": "john",
+    "SweepstakesToken": "uuid-v4-string",
+    "Page": 1,
+    "Search": "john",
     "startDate": "2025-01-01",
     "endDate": "2025-01-31"
 }
@@ -147,7 +149,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid or Missing sweepstakesToken",
+  "Message": "Invalid or Missing SweepstakesToken",
   "Code": 400
 }
 ```
@@ -168,8 +170,8 @@ print(response.json())
 
 ```json
 {
-  "sweepstakesToken": "uuid-v4-string",
-  "page": 1
+  "SweepstakesToken": "uuid-v4-string",
+  "Page": 1
 }
 ```
 
@@ -177,9 +179,9 @@ print(response.json())
 
 ```json
 {
-  "sweepstakesToken": "uuid-v4-string",
-  "page": 1,
-  "search": "john",
+  "SweepstakesToken": "uuid-v4-string",
+  "Page": 1,
+  "Search": "john",
   "startDate": "2025-01-01",
   "endDate": "2025-01-31"
 }
@@ -189,8 +191,8 @@ print(response.json())
 
 ```json
 {
-  "sweepstakesToken": "uuid-v4-string",
-  "page": 1,
+  "SweepstakesToken": "uuid-v4-string",
+  "Page": 1,
   "optInDate": "2025-01-15"
 }
 ```

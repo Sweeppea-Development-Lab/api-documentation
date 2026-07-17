@@ -16,17 +16,19 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 
 ## Request Parameters
 
+> **Parameter Casing:** All request parameters are `PascalCase`. For backward compatibility, `camelCase` equivalents (e.g. `sweepstakesToken`) are also accepted.
+
 | Parameter          | Type             | Required | Description                                                   |
 |--------------------|------------------|----------|---------------------------------------------------------------|
-| `sweepstakesToken` | String (UUID v4) | Yes      | The UUID token of the sweepstakes where the group belongs     |
-| `groupToken`       | String (UUID v4) | Yes      | The UUID token of the group to be deleted                     |
+| `SweepstakesToken` | String (UUID v4) | Yes      | The UUID token of the sweepstakes where the group belongs     |
+| `GroupToken`       | String (UUID v4) | Yes      | The UUID token of the group to be deleted                     |
 
 ## Request Example
 
 ```json
 {
-  "sweepstakesToken": "uuid-v4-string",
-  "groupToken": "uuid-v4-string"
+  "SweepstakesToken": "uuid-v4-string",
+  "GroupToken": "uuid-v4-string"
 }
 ```
 
@@ -39,8 +41,8 @@ curl -X POST "https://api-v3.sweeppea.com/groups/delete" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "sweepstakesToken": "uuid-v4-string",
-    "groupToken": "uuid-v4-string"
+    "SweepstakesToken": "uuid-v4-string",
+    "GroupToken": "uuid-v4-string"
   }'
 ```
 
@@ -54,8 +56,8 @@ const response = await fetch('https://api-v3.sweeppea.com/groups/delete', {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    sweepstakesToken: "uuid-v4-string",
-    groupToken: "uuid-v4-string"
+    SweepstakesToken: "uuid-v4-string",
+    GroupToken: "uuid-v4-string"
   })
 });
 
@@ -74,8 +76,8 @@ headers = {
     "Content-Type": "application/json"
 }
 data = {
-    "sweepstakesToken": "uuid-v4-string",
-    "groupToken": "uuid-v4-string"
+    "SweepstakesToken": "uuid-v4-string",
+    "GroupToken": "uuid-v4-string"
 }
 
 response = requests.post(url, headers=headers, json=data)
@@ -98,7 +100,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Missing required parameters: sweepstakesToken and groupToken"
+  "Message": "Missing required parameters: SweepstakesToken and GroupToken"
 }
 ```
 

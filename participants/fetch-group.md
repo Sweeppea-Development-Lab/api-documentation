@@ -16,15 +16,17 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 
 ## Request Parameters
 
+> **Parameter Casing:** All request parameters are `PascalCase`. For backward compatibility, `camelCase` equivalents (e.g. `sweepstakesToken`) are also accepted.
+
 | Parameter          | Type             | Required | Description                                             |
 |--------------------|------------------|----------|---------------------------------------------------------|
-| `sweepstakesToken` | String (UUID v4) | Yes      | The UUID token of the sweepstakes to fetch groups from  |
+| `SweepstakesToken` | String (UUID v4) | Yes      | The UUID token of the sweepstakes to fetch groups from  |
 
 ## Request Example
 
 ```json
 {
-  "sweepstakesToken": "uuid-v4-string"
+  "SweepstakesToken": "uuid-v4-string"
 }
 ```
 
@@ -37,7 +39,7 @@ curl -X POST "https://api-v3.sweeppea.com/groups/fetch" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "sweepstakesToken": "uuid-v4-string"
+    "SweepstakesToken": "uuid-v4-string"
   }'
 ```
 
@@ -51,7 +53,7 @@ const response = await fetch('https://api-v3.sweeppea.com/groups/fetch', {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    sweepstakesToken: "uuid-v4-string"
+    SweepstakesToken: "uuid-v4-string"
   })
 });
 
@@ -70,7 +72,7 @@ headers = {
     "Content-Type": "application/json"
 }
 data = {
-    "sweepstakesToken": "uuid-v4-string"
+    "SweepstakesToken": "uuid-v4-string"
 }
 
 response = requests.post(url, headers=headers, json=data)
@@ -113,7 +115,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Missing required parameter: sweepstakesToken"
+  "Message": "Missing required parameter: SweepstakesToken"
 }
 ```
 

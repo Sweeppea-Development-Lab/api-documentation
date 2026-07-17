@@ -19,25 +19,27 @@ This endpoint allows you to draw winners from your sweepstakes using a weighted 
 
 ## Request Parameters
 
+> **Parameter Casing:** All request parameters are `PascalCase`. For backward compatibility, `camelCase` equivalents (e.g. `sweepstakesToken`) are also accepted.
+
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `sweepstakesToken` | String (UUID v4) | Yes | Unique identifier of the sweepstakes |
-| `howManyWinnersToPick` | Number | No | Number of winners to select (default: 1) |
-| `group` | String | No | Group token to limit the draw to a specific group, or `"allgroups"` to include all participants (default: `"allgroups"`) |
-| `completedEntries` | Boolean | No | Only include participants who completed all bonus entry steps (default: false) |
-| `includeOptedOutParticipants` | Boolean | No | Include participants who opted out of notifications (default: false) |
-| `doNotIncludeSpamParticipants` | Boolean | No | Exclude participants flagged as spam (default: false) |
+| `SweepstakesToken` | String (UUID v4) | Yes | Unique identifier of the sweepstakes |
+| `HowManyWinnersToPick` | Number | No | Number of winners to select (default: 1) |
+| `Group` | String | No | Group token to limit the draw to a specific group, or `"allgroups"` to include all participants (default: `"allgroups"`) |
+| `CompletedEntries` | Boolean | No | Only include participants who completed all bonus entry steps (default: false) |
+| `IncludeOptedOutParticipants` | Boolean | No | Include participants who opted out of notifications (default: false) |
+| `DoNotIncludeSpamParticipants` | Boolean | No | Exclude participants flagged as spam (default: false) |
 
 ## Request Example
 
 ```json
 {
-  "sweepstakesToken": "uuid-v4-string",
-  "howManyWinnersToPick": 1,
-  "group": "allgroups",
-  "completedEntries": false,
-  "includeOptedOutParticipants": false,
-  "doNotIncludeSpamParticipants": true
+  "SweepstakesToken": "uuid-v4-string",
+  "HowManyWinnersToPick": 1,
+  "Group": "allgroups",
+  "CompletedEntries": false,
+  "IncludeOptedOutParticipants": false,
+  "DoNotIncludeSpamParticipants": true
 }
 ```
 
@@ -50,12 +52,12 @@ curl -X POST "https://api-v3.sweeppea.com/winners/draw" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "sweepstakesToken": "uuid-v4-string",
-    "howManyWinnersToPick": 1,
-    "group": "allgroups",
-    "completedEntries": false,
-    "includeOptedOutParticipants": false,
-    "doNotIncludeSpamParticipants": true
+    "SweepstakesToken": "uuid-v4-string",
+    "HowManyWinnersToPick": 1,
+    "Group": "allgroups",
+    "CompletedEntries": false,
+    "IncludeOptedOutParticipants": false,
+    "DoNotIncludeSpamParticipants": true
   }'
 ```
 
@@ -69,12 +71,12 @@ const response = await fetch('https://api-v3.sweeppea.com/winners/draw', {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    sweepstakesToken: "uuid-v4-string",
-    howManyWinnersToPick: 1,
-    group: "allgroups",
-    completedEntries: false,
-    includeOptedOutParticipants: false,
-    doNotIncludeSpamParticipants: true
+    SweepstakesToken: "uuid-v4-string",
+    HowManyWinnersToPick: 1,
+    Group: "allgroups",
+    CompletedEntries: false,
+    IncludeOptedOutParticipants: false,
+    DoNotIncludeSpamParticipants: true
   })
 });
 
@@ -93,12 +95,12 @@ headers = {
     "Content-Type": "application/json"
 }
 data = {
-    "sweepstakesToken": "uuid-v4-string",
-    "howManyWinnersToPick": 1,
-    "group": "allgroups",
-    "completedEntries": False,
-    "includeOptedOutParticipants": False,
-    "doNotIncludeSpamParticipants": True
+    "SweepstakesToken": "uuid-v4-string",
+    "HowManyWinnersToPick": 1,
+    "Group": "allgroups",
+    "CompletedEntries": False,
+    "IncludeOptedOutParticipants": False,
+    "DoNotIncludeSpamParticipants": True
 }
 
 response = requests.post(url, headers=headers, json=data)
