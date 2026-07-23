@@ -26,7 +26,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 
 **Note:** At least one optional field must be provided to update the rule.
 
-**Note:** Responses include both `AbbreviatedRulesForShopify` (preferred) and `AbbrebiatedRulesForShopify` (legacy) with the same value, so existing integrations keep working.
+**Note:** Responses always return the field as `AbbreviatedRulesForShopify`. The legacy misspelled name is only accepted as request input (deprecated).
 
 ## Code Examples
 
@@ -105,7 +105,6 @@ print(response.json())
     "Title": "Updated Official Rules",
     "Metadata": {},
     "DocumentContent": "<p>Updated HTML content of official rules...</p>",
-    "AbbrebiatedRulesForShopify": "Updated abbreviated rules for Shopify",
     "AbbreviatedRulesForShopify": "Updated abbreviated rules for Shopify",
     "EntryPeriods": [],
     "Views": [],

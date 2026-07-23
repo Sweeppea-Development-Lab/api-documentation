@@ -82,7 +82,6 @@ print(response.json())
       "SweepstakesToken": "uuid-v4-string",
       "Title": "Official Rules - Main",
       "DocumentContent": "Full HTML content of official rules...",
-      "AbbrebiatedRulesForShopify": "Abbreviated version...",
       "AbbreviatedRulesForShopify": "Abbreviated version...",
       "Metadata": {},
       "EntryPeriods": [],
@@ -107,7 +106,7 @@ print(response.json())
 }
 ```
 
-**Note:** `AbbreviatedRulesForShopify` (preferred) and `AbbrebiatedRulesForShopify` (legacy field name with a historical typo, kept for backward compatibility) always contain the same value.
+**Note:** This field was previously returned under a misspelled name (historical typo). It is now returned only as `AbbreviatedRulesForShopify`.
 
 **400 Bad Request**
 
