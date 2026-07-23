@@ -68,6 +68,7 @@ print(response.json())
         "Timezone": 5,
         "StartDate": "2025-06-01",
         "ExpirationDate": "2025-08-31",
+        "EndDate": "2025-08-31",
         "StartTime": "00:00",
         "EndTime": "23:59",
         "EmailSenderFrom": "noreply@example.com",
@@ -141,6 +142,7 @@ print(response.json())
         "Timezone": 8,
         "StartDate": "2025-11-01",
         "ExpirationDate": "2025-12-25",
+        "EndDate": "2025-12-25",
         "StartTime": "00:00",
         "EndTime": "23:59",
         "EmailSenderFrom": "contests@example.com",
@@ -178,6 +180,8 @@ print(response.json())
   "Count": 2
 }
 ```
+
+**Note:** `Settings.EndDate` is an alias of `Settings.ExpirationDate` (same value). It matches the `EndDate` parameter used by `/sweepstakes/create` and `/sweepstakes/update`. `ExpirationDate` is kept for backward compatibility.
 
 **401 Unauthorized**
 ```json

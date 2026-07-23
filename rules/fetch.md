@@ -83,6 +83,7 @@ print(response.json())
       "Title": "Official Rules - Main",
       "DocumentContent": "Full HTML content of official rules...",
       "AbbrebiatedRulesForShopify": "Abbreviated version...",
+      "AbbreviatedRulesForShopify": "Abbreviated version...",
       "Metadata": {},
       "EntryPeriods": [],
       "Views": [],
@@ -105,6 +106,8 @@ print(response.json())
   }
 }
 ```
+
+**Note:** `AbbreviatedRulesForShopify` (preferred) and `AbbrebiatedRulesForShopify` (legacy field name with a historical typo, kept for backward compatibility) always contain the same value.
 
 **400 Bad Request**
 

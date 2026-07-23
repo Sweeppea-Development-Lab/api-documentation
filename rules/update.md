@@ -22,9 +22,11 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `SweepstakesToken` | String (UUID v4) | Yes | 36 | The unique identifier of the sweepstakes |
 | `Title` | String | No | 100 | The title of the official rules |
 | `DocumentContent` | String | No | 1,000,000 | The full HTML content of the official rules |
-| `AbbrebiatedRulesForShopify` | String | No | 1,000,000 | Abbreviated rules for Shopify integration |
+| `AbbreviatedRulesForShopify` | String | No | 1,000,000 | Abbreviated rules for Shopify integration. The legacy field name `AbbrebiatedRulesForShopify` (historical typo) is also accepted for backward compatibility |
 
 **Note:** At least one optional field must be provided to update the rule.
+
+**Note:** Responses include both `AbbreviatedRulesForShopify` (preferred) and `AbbrebiatedRulesForShopify` (legacy) with the same value, so existing integrations keep working.
 
 ## Code Examples
 
@@ -39,7 +41,7 @@ curl -X PUT "https://api-v3.sweeppea.com/rules/update" \
     "SweepstakesToken": "YOUR_SWEEPSTAKES_TOKEN",
     "Title": "Updated Official Rules",
     "DocumentContent": "<p>Updated HTML content of official rules...</p>",
-    "AbbrebiatedRulesForShopify": "Updated abbreviated rules for Shopify"
+    "AbbreviatedRulesForShopify": "Updated abbreviated rules for Shopify"
   }'
 ```
 
@@ -57,7 +59,7 @@ const response = await fetch('https://api-v3.sweeppea.com/rules/update', {
     SweepstakesToken: 'YOUR_SWEEPSTAKES_TOKEN',
     Title: 'Updated Official Rules',
     DocumentContent: '<p>Updated HTML content of official rules...</p>',
-    AbbrebiatedRulesForShopify: 'Updated abbreviated rules for Shopify'
+    AbbreviatedRulesForShopify: 'Updated abbreviated rules for Shopify'
   })
 });
 
@@ -81,7 +83,7 @@ payload = {
     "SweepstakesToken": "YOUR_SWEEPSTAKES_TOKEN",
     "Title": "Updated Official Rules",
     "DocumentContent": "<p>Updated HTML content of official rules...</p>",
-    "AbbrebiatedRulesForShopify": "Updated abbreviated rules for Shopify"
+    "AbbreviatedRulesForShopify": "Updated abbreviated rules for Shopify"
 }
 
 response = requests.put(url, headers=headers, data=json.dumps(payload))
@@ -104,6 +106,7 @@ print(response.json())
     "Metadata": {},
     "DocumentContent": "<p>Updated HTML content of official rules...</p>",
     "AbbrebiatedRulesForShopify": "Updated abbreviated rules for Shopify",
+    "AbbreviatedRulesForShopify": "Updated abbreviated rules for Shopify",
     "EntryPeriods": [],
     "Views": [],
     "Status": false,
@@ -115,11 +118,22 @@ print(response.json())
 
 **400 Bad Request**
 
+All validation errors include a `Help` object listing every accepted parameter.
+
 ```json
 {
   "Response": false,
   "Message": "RulesToken is Required",
-  "Code": 400
+  "Code": 400,
+  "Help": {
+    "ExpectedBody": {
+      "RulesToken": "string (required) — UUID of the rule to update",
+      "SweepstakesToken": "string (required) — UUID of the sweepstakes",
+      "Title": "string (optional) — Rule title (max 100 characters)",
+      "DocumentContent": "string (optional) — Rule content (max 1,000,000 characters)",
+      "AbbreviatedRulesForShopify": "string (optional) — Abbreviated rules for Shopify (max 1,000,000 characters). Legacy alias \"AbbrebiatedRulesForShopify\" is also accepted for backward compatibility"
+    }
+  }
 }
 ```
 
@@ -174,7 +188,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "AbbrebiatedRulesForShopify Must Be a String",
+  "Message": "AbbreviatedRulesForShopify Must Be a String",
   "Code": 400
 }
 ```
@@ -182,7 +196,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "AbbrebiatedRulesForShopify Exceeds Maximum Length of 1000000 Characters",
+  "Message": "AbbreviatedRulesForShopify Exceeds Maximum Length of 1000000 Characters",
   "Code": 400
 }
 ```

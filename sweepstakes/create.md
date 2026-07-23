@@ -33,7 +33,7 @@ When you create a sweepstakes, the system automatically generates:
 | `SweepstakesType` | Integer | Required | Type of sweepstakes: `1` = SMS, `2` = Email, `3` = Social |
 | `Handler` | String | Required | Unique handler/keyword (max 20 chars, alphanumeric only, e.g., "WIN2026") |
 | `StartDate` | String | Required | Start date in YYYY-MM-DD format (must be today or future) |
-| `EndDate` | String | Required | End date in YYYY-MM-DD format (must be today or future, cannot be before StartDate) |
+| `EndDate` | String | Required | End date in YYYY-MM-DD format (must be today or future, cannot be before StartDate). Stored internally as `Settings.ExpirationDate` — `/sweepstakes/fetch` returns it as both `Settings.ExpirationDate` and `Settings.EndDate` |
 | `StartTime` | String | Required | Start time in HH:MM format (24-hour, default: "00:00") |
 | `EndTime` | String | Required | End time in HH:MM format (24-hour, default: "23:59") |
 | `CreateInCalendar` | Boolean | Optional | Create START and END calendar events (default: false) |
