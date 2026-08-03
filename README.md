@@ -54,6 +54,33 @@ Sweeppea Renaissance includes a full **Model Context Protocol (MCP) Server** imp
 
 ---
 
+## Command Line Interface (CLI)
+
+The official **Sweeppea CLI** puts this same API in your terminal — a single native binary (written in Rust), distributed on npm, with no runtime to install. Every command supports `--json` for machine-readable output, and destructive actions confirm first and honor `--yes`.
+
+```bash
+npx @sweeppea/cli auth login
+```
+
+- Install: https://clidocs.sweeppea.com/#install
+- Authentication: https://clidocs.sweeppea.com/#auth
+- Commands: https://clidocs.sweeppea.com/#commands
+- npm package: https://www.npmjs.com/package/@sweeppea/cli
+
+---
+
+## The Sweeppea Developer Ecosystem
+
+Three clients, one platform, one API key — all of them talk to this same REST API v3.
+
+| | For | Docs |
+|---|---|---|
+| **REST API v3** | Direct HTTP integration (OpenAPI spec included) | https://apidocs.sweeppea.com/ |
+| **MCP Server** | AI assistants (Claude, Cursor, Windsurf, Gemini CLI…) | https://mcpdocs.sweeppea.com/ |
+| **CLI** | Your shell and CI — `npx @sweeppea/cli` | https://clidocs.sweeppea.com/ |
+
+---
+
 ## Endpoints
 
 ### Account
