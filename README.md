@@ -185,6 +185,17 @@ Three clients, one platform, one API key — all of them talk to this same REST 
 | [support/resolve](support/resolve.md) | POST | Resolve a ticket |
 | [support/delete](support/delete.md) | POST | Delete a ticket |
 
+### Surveys
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| [surveys/create](surveys/create.md) | POST | Create a survey with its whole question set |
+| [surveys/fetch](surveys/fetch.md) | POST | List surveys with question, page and response counters |
+| [surveys/single](surveys/single.md) | POST | Fetch one survey with its complete question set |
+| [surveys/update](surveys/update.md) | POST | Update a survey and optionally replace its question set |
+| [surveys/delete](surveys/delete.md) | POST | Delete a survey with its questions, responses, stats and media |
+| [surveys/responses](surveys/responses.md) | POST | Fetch the individual answers collected by a survey |
+| [surveys/report](surveys/report.md) | POST | Fetch the aggregated report of a survey |
+
 ### Sweepstakes
 | Endpoint | Method | Description |
 |----------|--------|-------------|
