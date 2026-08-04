@@ -133,6 +133,15 @@ Three clients, one platform, one API key — all of them talk to this same REST 
 |----------|--------|-------------|
 | [helpsupport/fetch](helpsupport/fetch.md) | POST | Fetch help & support articles |
 
+### Invoices
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| [invoices/create](invoices/create.md) | POST | Create an invoice from a recipient and line items |
+| [invoices/fetch](invoices/fetch.md) | POST | List invoices with summary totals |
+| [invoices/single](invoices/single.md) | POST | Fetch one invoice with public link, QR and timeline |
+| [invoices/update](invoices/update.md) | POST | Edit, publish or cancel an invoice |
+| [invoices/delete](invoices/delete.md) | POST | Delete an invoice and its event trail |
+
 ### Notes
 | Endpoint | Method | Description |
 |----------|--------|-------------|
