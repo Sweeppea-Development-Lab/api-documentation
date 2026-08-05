@@ -102,7 +102,9 @@ print(response.json())
       "MaxSweepstakesAllowed": 10,
       "MaxStorageSize": 5000,
       "MaxParticipantsAllowed": 500000,
-      "MaxApiCallsAllowed": 500000
+      "MaxApiCallsAllowed": 500000,
+      "MaxInvoicesAllowed": 100,
+      "MaxSurveysAllowed": 3
     },
     "Primary": false,
     "Locked": true,

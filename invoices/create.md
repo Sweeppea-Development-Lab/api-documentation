@@ -305,6 +305,16 @@ print(response.json())
 }
 ```
 
+**403 Forbidden** — account-wide plan cap reached (see `MaxInvoicesAllowed` in [Plan Details](../account/plan.md)).
+
+```json
+{
+  "Response": false,
+  "Message": "Invoices Limit Reached. Your plan allows 100 invoice(s) across the whole account and you currently have 100. Please upgrade your plan to create more invoices",
+  "Code": 403
+}
+```
+
 **500 Internal Server Error**
 
 ```json

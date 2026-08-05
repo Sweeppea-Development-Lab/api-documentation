@@ -141,6 +141,15 @@ print(response.json())
 }
 ```
 
+**403 Forbidden** — plan cap reached. A clone consumes a sweepstakes slot exactly like a creation, and the count includes archived sweepstakes (see `MaxSweepstakesAllowed` in [Plan Details](../account/plan.md)).
+```json
+{
+  "Response": false,
+  "Message": "Sweepstakes Limit Reached. Your plan allows 10 sweepstakes and you currently have 10. Please upgrade your plan to create more sweepstakes",
+  "Code": 403
+}
+```
+
 **400 Bad Request**
 ```json
 {

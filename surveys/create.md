@@ -326,6 +326,16 @@ print(response.json())
 }
 ```
 
+**403 Forbidden** — account-wide plan cap reached (see `MaxSurveysAllowed` in [Plan Details](../account/plan.md)).
+
+```json
+{
+  "Response": false,
+  "Message": "Surveys Limit Reached. Your plan allows 3 survey(s) across the whole account and you currently have 3. Please upgrade your plan to create more surveys",
+  "Code": 403
+}
+```
+
 **404 Not Found**
 
 ```json
