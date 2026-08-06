@@ -12,7 +12,7 @@ This is the raw data behind the report. Every answer carries the question it ans
 
 ## Authentication
 
-This endpoint requires Bearer token authentication via the `Authorization` header. The account must also have the **Surveys module enabled** — it is disabled by default and granted by an administrator.
+This endpoint requires Bearer token authentication via the `Authorization` header.
 
 ## Request Parameters
 
@@ -197,16 +197,6 @@ print(response.json())
 {
   "Response": false,
   "Message": "Invalid API Token",
-  "Code": 403
-}
-```
-
-**403 Forbidden**
-
-```json
-{
-  "Response": false,
-  "Message": "The Surveys module is not enabled for this account. Contact support to request access.",
   "Code": 403
 }
 ```

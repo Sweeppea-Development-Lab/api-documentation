@@ -12,7 +12,7 @@ This endpoint permanently deletes an invoice and every event recorded against it
 
 ## Authentication
 
-This endpoint requires Bearer token authentication via the `Authorization` header. The account must also have the **Invoices module enabled** — it is disabled by default and granted by an administrator.
+This endpoint requires Bearer token authentication via the `Authorization` header.
 
 ## Request Parameters
 
@@ -144,16 +144,6 @@ print(response.json())
 {
   "Response": false,
   "Message": "Invalid API Token",
-  "Code": 403
-}
-```
-
-**403 Forbidden**
-
-```json
-{
-  "Response": false,
-  "Message": "The Invoices module is not enabled for this account. Contact support to request access.",
   "Code": 403
 }
 ```
