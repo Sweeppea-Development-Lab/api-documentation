@@ -104,7 +104,8 @@ print(response.json())
       "MaxParticipantsAllowed": 500000,
       "MaxApiCallsAllowed": 500000,
       "MaxInvoicesAllowed": 100,
-      "MaxSurveysAllowed": 3
+      "MaxSurveysAllowed": 3,
+      "MaxAiTokensAllowed": 1000000
     },
     "Primary": false,
     "Locked": true,
