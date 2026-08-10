@@ -8,7 +8,7 @@ Upload a file to the authenticated user's Drive. Validates file type against a w
 
 ## Description
 
-This endpoint uploads a file to the user's Drive. The file content must be sent as a base64-encoded string in the request body. The endpoint validates the MIME type and extension against a whitelist of allowed types, checks that the file does not exceed 10 MB, verifies the user has sufficient storage quota, and sanitizes the filename (replacing spaces with underscores and removing special characters). If no file category exists, a default "General" category is automatically created. Files are uploaded as private by default.
+This endpoint uploads a file to the user's Drive. The file content must be sent as a base64-encoded string in the request body. The endpoint validates the MIME type and extension against a whitelist of allowed types, checks that the file does not exceed 10 MB, verifies the user has sufficient storage quota, and normalizes the filename with the platform-wide standard (unsafe characters become underscores, accents are transliterated, casing is preserved, and no timestamp is appended). The filename must be unused in the account: uploading a name that already exists returns a `409` instead of overwriting the stored file. If no file category exists, a default "General" category is automatically created. Files are uploaded as private by default.
 
 ## Authentication
 
@@ -169,6 +169,16 @@ print(response.json())
 }
 ```
 
+**409 Conflict** — Filename already in use
+
+```json
+{
+  "Response": false,
+  "Message": "A file named \"report.pdf\" already exists in this account's Drive. Rename the file or delete the existing one and try again.",
+  "ExistingFileToken": "uuid-v4-string"
+}
+```
+
 **401 Unauthorized**
 
 ```json
@@ -204,6 +214,7 @@ print(response.json())
 - **Max File Size:** 10 MB per file. Files exceeding this limit are rejected.
 - **Allowed Types:** PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, TXT, CSV, JPG, JPEG, PNG, GIF, WEBP, SVG, BMP.
 - **Privacy:** Files are uploaded as private by default. Set `Private: false` to make a file accessible.
-- **Filename Sanitization:** Spaces are replaced with underscores, special characters are removed, and path traversal sequences are stripped.
+- **Filename Sanitization:** Only the basename is kept (path traversal sequences are stripped), accents are transliterated (`Ñandú.pdf` becomes `Nandu.pdf`), anything outside `A-Za-z0-9._-` is replaced with an underscore, and the original casing is preserved. No timestamp and no random suffix are appended — the name you send is the name stored.
+- **Unique Filenames:** A filename can only exist once per account. The Drive folder in S3 is flat (`{UserToken}/documents/`) and categories are labels on the record rather than folders, so the same name cannot be reused in a different category. Different accounts are unaffected.
 - **Auto-Category:** If the user has no file categories, a default "General" category is automatically created and assigned.
 - **Storage Quota:** The upload is rejected if it would exceed the user's plan storage quota.

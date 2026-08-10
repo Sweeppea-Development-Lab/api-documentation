@@ -15,6 +15,7 @@ This endpoint retrieves detailed information about the user's plan using the Api
 - **API Token Validation:** The Bearer token must be valid and associated with an existing user account.
 - **Account Status Check:** The user's account Status must be `true` (enabled). If the account is disabled (`Status = false`), the request will be rejected with a 403 error.
 - **Domain Access Control:** The user must have a wildcard domain (`*`) configured in their API domains. This allows API access from any domain. Without the wildcard domain, the request will be rejected with a 403 error.
+- **Sharing & Execution Permissions:** `AllowSurveysSharing`, `AllowInvoicesSharing`, `AllowAgentsSharing` and `AllowDripCampaignsSharing` report whether the plan allows putting each module in front of the public — publishing a survey and its link/QR/embed, sending an invoice and taking its payment, activating an agent on a website or an entry page. Creating and viewing those modules is open to every account regardless of these flags. Unlike the numeric restrictions, a plan that does not carry the key reports `false`: these shipped switched off on every plan and are granted explicitly by an administrator.
 
 ## Code Examples
 
@@ -105,7 +106,12 @@ print(response.json())
       "MaxApiCallsAllowed": 500000,
       "MaxInvoicesAllowed": 100,
       "MaxSurveysAllowed": 3,
-      "MaxAiTokensAllowed": 1000000
+      "MaxAiTokensAllowed": 1000000,
+      "MaxAgentsAllowed": 3,
+      "AllowSurveysSharing": false,
+      "AllowInvoicesSharing": false,
+      "AllowAgentsSharing": false,
+      "AllowDripCampaignsSharing": false
     },
     "Primary": false,
     "Locked": true,
