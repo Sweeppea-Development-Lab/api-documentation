@@ -29,7 +29,7 @@ When you create a sweepstakes, the system automatically generates:
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `SweepstakesName` | String | Required | The name of the sweepstakes |
+| `SweepstakesName` | String | Required | The name of the sweepstakes. **Maximum 200 characters**; longer values are rejected with a `400`. |
 | `SweepstakesType` | Integer | Required | Type of sweepstakes: `1` = SMS, `2` = Email, `3` = Social |
 | `Handler` | String | Required | Unique handler/keyword (max 20 chars, alphanumeric only, e.g., "WIN2026") |
 | `StartDate` | String | Required | Start date in YYYY-MM-DD format (must be today or future) |

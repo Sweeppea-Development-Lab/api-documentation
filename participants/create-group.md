@@ -21,7 +21,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | Parameter          | Type             | Required | Description                                                             |
 |--------------------|------------------|----------|-------------------------------------------------------------------------|
 | `SweepstakesToken` | String (UUID v4) | Yes      | The UUID token of the sweepstakes where the group will be created       |
-| `GroupName`        | String           | Yes      | The name of the group (must be unique within the sweepstakes)           |
+| `GroupName`        | String           | Yes      | The name of the group (must be unique within the sweepstakes). **Maximum 100 characters**; longer values are rejected with a `400`. |
 
 ## Request Example
 

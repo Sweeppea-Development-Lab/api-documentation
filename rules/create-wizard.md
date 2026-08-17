@@ -24,7 +24,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 |-----------|------|------|-------------|
 | `SweepstakesToken` | String (UUID v4) | - | The unique identifier of the target sweepstakes |
 | `Arv` | Number (1\|2) | B | 1 = Total ARV >= $5,000, 2 = Total ARV < $5,000 |
-| `AlcoholSweeps` | Number (1\|2) | C | 1 = Alcohol-related sweepstakes, 2 = Not alcohol-related |
+| `AlcoholSweeps` | Number (1\|2) | C | 1 = Alcohol-related sweepstakes, 2 = Not alcohol-related. The 21+ requirement is triggered by the **sponsor producing or manufacturing alcohol** — a bar, a restaurant or a store that only resells it is not an alcohol sponsor for this purpose. Sending `1` forces `MinAgeOfParticipation` to `2`. |
 | `SweepstakesName` | String (6-60 chars) | D | Official promotional name of the sweepstakes |
 | `StartDate` | String (YYYY-MM-DD) | E | Sweepstakes start date |
 | `StartTime` | String | E | Start time (e.g., "09:00 AM" or "14:00") |
@@ -43,7 +43,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `SponsorState` | String | I | US state name or abbreviation |
 | `SponsorZipCode` | String (5 digits) | I | 5-digit ZIP code (e.g., "33131") |
 | `MethodOfEntry` | Number (1-8) | J | 1=Website, 2=SMS, 3=Social Media, 4=Other, 5=Purchase($1=1entry), 6=Purchase(1order=1entry), 7=Donation, 8=Subscription |
-| `MinAgeOfParticipation` | Number (1\|2\|3) | K | 1 = 18+, 2 = 21+, 3 = 13+ (with parental consent) |
+| `MinAgeOfParticipation` | Number (1\|2\|3) | K | 1 = 18+, 2 = 21+, 3 = 13+ (with parental consent). **Must be `2` when `AlcoholSweeps` is `1`** — an alcohol-related sweepstakes cannot be opened to participants under 21, and any other value is rejected with a `400`. |
 | `StatesAbleToParticipate` | Number (1-10) | L | Geographic eligibility (see Eligibility Options below) |
 | `PrivacyPolicyURL` | String (min 11 chars) | M | Full URL to privacy policy (must include http/https) |
 | `SweeppeaEntryPage` | Number (1\|2\|3) | N | 1=Sweeppea entry page, 2=Custom entry page, 3=No entry page |
@@ -70,7 +70,7 @@ These fields are required only when certain conditions are met.
 | `SponsorEcommerceStoreURLC` | String | MethodOfEntry = 8 | eCommerce store URL for subscription entry |
 | `TotalNumberOfEntriesAwardedAMOE` | Number (>= 1) | MethodOfEntry = 5, 6, 7, or 8 | Entries awarded per AMOE submission |
 | `LimitOrMaxNumberOfEntriesAMOE` | Number (>= 1) | MethodOfEntry = 5, 6, 7, or 8 | Maximum AMOE entries per person |
-| `ListOfStates` | Array of Strings | StatesAbleToParticipate = 4 | Array of US state names (e.g., ["Florida", "California"]) |
+| `ListOfStates` | Array of Strings | StatesAbleToParticipate = 4 | Only real US jurisdictions are accepted: the 50 states, the District of Columbia and Puerto Rico, by full name or two-letter abbreviation, in any case. Abbreviations are normalized to the full name in the generated document. Unknown values are rejected with a `400` naming every one of them. Example: `["Florida", "California"]` or `["FL", "CA"]` |
 | `CustomEntryPage` | String (min 11 chars) | SweeppeaEntryPage = 2 | URL of the custom entry page |
 
 ## Request Parameters - Optional Fields
@@ -88,16 +88,16 @@ These fields are required only when certain conditions are met.
 
 | Value | Description |
 |-------|-------------|
-| 1 | All 50 US States + DC |
-| 2 | All 50 US States + DC + Puerto Rico |
-| 3 | All 50 US States + DC + All US Territories |
-| 4 | Select specific states (requires ListOfStates array) |
-| 5 | US and Canada (excluding Quebec) |
-| 6 | US, Canada (excluding Quebec) + Puerto Rico |
-| 7 | US and UK |
-| 8 | US and Mexico |
-| 9 | Worldwide |
-| 10 | US, Canada (excluding Quebec), Mexico |
+| 1 | 48 contiguous US states + DC |
+| 2 | 50 US states + DC |
+| 3 | 50 US states + DC + US Virgin Islands + Puerto Rico |
+| 4 | Only the states listed in `ListOfStates` |
+| 5 | 50 US states + DC, **excluding Florida and New York** |
+| 6 | 50 US states + DC, **excluding Florida, New York and Rhode Island** |
+| 7 | 50 US states + DC + Canada |
+| 8 | 50 US states + DC + Canada, **excluding Florida and New York** |
+| 9 | 50 US states + DC + Canada, **excluding Florida, New York and Rhode Island** |
+| 10 | Canada only |
 
 ## Request Example
 
@@ -299,7 +299,36 @@ print(response.json())
     "Primary": true,
     "CreationDate": "2026-02-17T12:00:00.000Z"
   },
+  "Warnings": [],
   "Message": "Official rules created successfully via wizard."
+}
+```
+
+### Warnings
+
+`Warnings` is **always present** on a `200`, and is an empty array when there is
+nothing to report. A warning never means the rules document failed to save — it
+means the document was published but something else in the sweepstakes does not
+match what it now promises, and only the client can fix it.
+
+| Code | When it is returned |
+|------|---------------------|
+| `AMOE_PAGE_NOT_ACTIVE` | `MethodOfEntry` is 5, 6, 7 or 8, so the document states that a free alternative method of entry is available, but the sweepstakes' AMOE page is switched off and participants following the free route cannot enter. The AMOE page is OFF on every newly created sweepstakes and the wizard does not turn it on. Fix it with `POST /entrypage/update` and `{ "ActivateAmoeSwitch": true }`. |
+| `AMOE_ENTRIES_MISMATCH` | `TotalNumberOfEntriesAwardedAMOE` in the published document differs from `AmoeEntries` on the entry page, so the page awards a different number of entries than the rules promise. Fix it with `POST /entrypage/update` and `{ "AmoeEntries": <value> }`. |
+
+```json
+{
+  "Response": true,
+  "Data": { "RulesToken": "bc225a85-c16f-4339-a1d6-d0c6d62fa18d", "...": "..." },
+  "Warnings": [
+    {
+      "Code": "AMOE_PAGE_NOT_ACTIVE",
+      "Field": "MethodOfEntry",
+      "Message": "These official rules state that a free alternative method of entry (AMOE) is available, but the AMOE page of this sweepstakes is currently switched OFF, so participants who follow the free route will not be able to enter.",
+      "Action": "Turn it on in the app under Entry Page > AMOE, or call POST /entrypage/update with { \"SweepstakesToken\": \"...\", \"ActivateAmoeSwitch\": true }."
+    }
+  ],
+  "Message": "Official rules created successfully via wizard, with warnings that need your attention."
 }
 ```
 

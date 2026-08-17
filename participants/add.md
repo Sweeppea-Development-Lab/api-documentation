@@ -29,7 +29,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `Source`                         | String | Yes      | Entry source, max 100 characters (e.g., `"api"`)                                                       |
 | `SweepstakesToken`               | String | Yes      | UUID v4 identifier for the sweepstakes                                                                 |
 | `EntryPageFields`                | Object | Yes      | Object containing all entry page field data                                                            |
-| `EntryPageFields.KeyPhoneNumber` | String | Yes      | Participant's phone number. Must be exactly 10 digits (US format, no country code, no separators).    |
+| `EntryPageFields.KeyPhoneNumber` | String | Yes      | Participant's US or Canada phone number. Accepted formats: `"2025550100"`, `"+12025550100"` (E.164), `"(202) 555-0100"`, `"202-555-0100"`, `"12025550100"`. The value is normalized to 10 digits before it is stored. A non-`+1` country code is rejected rather than truncated. |
 | `EntryPageFields.KeyEmail`       | String | Yes      | Participant's email address. Length between 5 and 100 characters.                                     |
 | `EntryPageFields.BonusEntries`   | Number | No       | Number of bonus entries (default: 0)                                                                   |
 | `EntryPageFields.Fields`         | Object | Yes      | Object containing the participant's entry page field values                                            |

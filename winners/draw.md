@@ -24,7 +24,7 @@ This endpoint allows you to draw winners from your sweepstakes using a weighted 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `SweepstakesToken` | String (UUID v4) | Yes | Unique identifier of the sweepstakes |
-| `HowManyWinnersToPick` | Number | No | Number of winners to select (default: 1) |
+| `HowManyWinnersToPick` | Number | No | Number of winners to select (default: 1). **Cannot exceed the number of eligible participants** left after the group and filter options below; asking for more returns a `400` whose `Help.EligibleParticipants` reports how many are actually available. |
 | `Group` | String | No | Group token to limit the draw to a specific group, or `"allgroups"` to include all participants (default: `"allgroups"`) |
 | `CompletedEntries` | Boolean | No | Only include participants who completed all bonus entry steps (default: false) |
 | `IncludeOptedOutParticipants` | Boolean | No | Include participants who opted out of notifications (default: false) |

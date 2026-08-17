@@ -58,7 +58,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `ActivateAgeGateSwitch` | Boolean |  |
 | `AgeGateHeadline` | String |  |
 | `AgeGateDescription` | String |  |
-| `AgeGateMinAge` | Number |  |
+| `AgeGateMinAge` | Number (1\|2\|3) | **A CODE, NOT AN AGE IN YEARS.** `1` = 13 years or older, `2` = 18 years or older, `3` = 21 years or older. The platform default is `3` (21+). Any other value is rejected with a `400`. |
 | `AgeGateBackgroundColor` | Object | `{ "hex": "#FFF" }` |
 | `AgeGateTextColor` | Object | `{ "hex": "#000" }` |
 | `ActivateAmoeSwitch` | Boolean |  |
