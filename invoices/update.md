@@ -279,6 +279,6 @@ print(response.json())
 - **⛔ Never Demoted:** `Status: "draft"` is always rejected. An invoice only moves forward
 - **🔒 Immutable When Closed:** `paid` and `cancelled` invoices return `409` — they are financial history
 - **🧊 Frozen Fees:** The commission percentages are never recomputed on update — they are written back unchanged alongside the amounts they produced, so the stored figures always reconcile
-- **💳 Fees Are Paid By The Recipient:** `Total` **includes** them and you receive `AmountBeforeFees` in full. Changing `PaymentMethod` recomputes the breakdown: switching a `card` invoice to `check` or `transfer` removes the merchant fee and lowers the `Total`; switching back adds it again
+- **💳 Fees Are Paid By The Recipient, And Only On A Card:** changing `PaymentMethod` recomputes the breakdown. Switching a `card` invoice to `check` or `transfer` removes **every** fee and lowers `Total` to the base; switching back adds the surcharge again. On `recipient`, `Total` is the base and `FeeAmount` is what the payer would add by taking the card
 - **📧 No Email:** Publishing does not notify the recipient. Distribute `PublicLink` yourself
 - **📋 Audit Trail:** Every call appends an entry to the invoice's modifications log with the exact field-level changes returned in `Changes`
