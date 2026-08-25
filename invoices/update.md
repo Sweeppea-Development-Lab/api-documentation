@@ -28,7 +28,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `TaxEnabled` | Boolean | No | Apply tax |
 | `TaxLabel` | String | No | Tax label |
 | `TaxRate` | Number | No | Tax percentage from 0 to 100 |
-| `PaymentMethod` | String | No | `card`, `check` or `transfer` |
+| `PaymentMethod` | String | No | `card`, `check`, `transfer` or `recipient` (the payer chooses on the invoice page) |
 | `PaymentInstructions` | String | No | Offline instructions. Forced empty when the method is `card` |
 | `NotesToRecipient` | String | No | Notes shown to the recipient (max 3000 characters) |
 | `Terms` | String | No | Terms and conditions (max 3000 characters) |
@@ -159,7 +159,12 @@ print(response.json())
     "TaxEnabled": true,
     "TaxRate": 8.5,
     "TaxAmount": 450.5,
-    "Total": 5750.5,
+    "AmountBeforeFees": 5750.5,
+    "SweeppeaFeeAmount": 183.53,
+    "MerchantFeeAmount": 183.53,
+    "FeeAmount": 367.06,
+    "FeesChargedToRecipient": true,
+    "Total": 6117.56,
     "PaymentMethod": "card",
     "PublicLink": "https://app.sweeppea.com/invoice?t=uuid-v4-string",
     "Changes": [
@@ -273,6 +278,7 @@ print(response.json())
 - **🚦 Status Machine:** `draft → pending → paid`, with `cancelled` reachable from `draft` and `pending`. Payment itself happens on the public page or through an administrator, never through this endpoint
 - **⛔ Never Demoted:** `Status: "draft"` is always rejected. An invoice only moves forward
 - **🔒 Immutable When Closed:** `paid` and `cancelled` invoices return `409` — they are financial history
-- **🧊 Frozen Fees:** The commission percentages are never recomputed on update
+- **🧊 Frozen Fees:** The commission percentages are never recomputed on update — they are written back unchanged alongside the amounts they produced, so the stored figures always reconcile
+- **💳 Fees Are Paid By The Recipient:** `Total` **includes** them and you receive `AmountBeforeFees` in full. Changing `PaymentMethod` recomputes the breakdown: switching a `card` invoice to `check` or `transfer` removes the merchant fee and lowers the `Total`; switching back adds it again
 - **📧 No Email:** Publishing does not notify the recipient. Distribute `PublicLink` yourself
 - **📋 Audit Trail:** Every call appends an entry to the invoice's modifications log with the exact field-level changes returned in `Changes`

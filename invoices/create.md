@@ -27,7 +27,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `TaxEnabled` | Boolean | No | Apply tax (default: false) |
 | `TaxLabel` | String | No | Tax label (default: "Tax") |
 | `TaxRate` | Number | No | Tax percentage from 0 to 100 |
-| `PaymentMethod` | String | No | `card` (default), `check` or `transfer` |
+| `PaymentMethod` | String | No | `card` (default), `check`, `transfer` or `recipient` (the payer chooses on the invoice page) |
 | `PaymentInstructions` | String | No | Offline instructions. Only stored for `check` / `transfer` |
 | `NotesToRecipient` | String | No | Notes shown to the recipient (max 3000 characters) |
 | `Terms` | String | No | Terms and conditions (max 3000 characters) |
@@ -227,7 +227,12 @@ print(response.json())
     "TaxEnabled": true,
     "TaxRate": 8.5,
     "TaxAmount": 395.25,
-    "Total": 5045.25,
+    "AmountBeforeFees": 5045.25,
+    "SweeppeaFeeAmount": 161.02,
+    "MerchantFeeAmount": 161.02,
+    "FeeAmount": 322.04,
+    "FeesChargedToRecipient": true,
+    "Total": 5367.29,
     "PaymentMethod": "card",
     "ProcessingFeePercentage": 3,
     "MerchantFeePercentage": 3,
@@ -318,7 +323,8 @@ print(response.json())
 ## Notes
 
 - **🔒 Module Access:** The Invoices module is disabled by default. An administrator must enable it for your account before any of these endpoints will respond
-- **💵 Money Is Recomputed:** `Subtotal`, `TaxAmount` and `Total` are always derived from `Items`, `DiscountAmount` and `TaxRate`. Values sent for them are ignored
+- **💵 Money Is Recomputed:** `Subtotal`, `TaxAmount`, the fee breakdown and `Total` are always derived from `Items`, `DiscountAmount`, `TaxRate` and `PaymentMethod`. Values sent for them are ignored
+- **💳 Fees Are Paid By The Recipient:** `Total` **includes** the processing fees and you receive `AmountBeforeFees` in full. It is a gross-up, not an addition: `Total = AmountBeforeFees / (1 − fee)`, because the fees are charged as a percentage of what is actually charged. The merchant fee applies only when a card can be used (`card` and `recipient`); `check` and `transfer` carry the Sweeppea fee alone
 - **🔢 Atomic Numbering:** Invoice numbers are reserved with an atomic per-account counter, so parallel create calls always receive distinct consecutive numbers
 - **🧊 Frozen Fees:** `ProcessingFeePercentage` and `MerchantFeePercentage` are copied from your plan at creation and never recalculated afterwards
 - **📧 No Email:** This endpoint never notifies the recipient. Take `PublicLink` and distribute it however you want
