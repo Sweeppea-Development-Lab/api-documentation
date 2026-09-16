@@ -1,6 +1,6 @@
 # Create Support Ticket
 
-Create a new support ticket. Optionally assign it to a specific admin by name or email; otherwise it is assigned to all admin users.
+Create a new support ticket for a specific platform. Optionally assign it to a specific admin by name or email; otherwise it is assigned to all admin users.
 
 ## Endpoint
 
@@ -13,7 +13,9 @@ Creates a new support ticket for the authenticated user. Each ticket receives a 
 **Assignment behaviour:**
 
 - **Without `AssignTo`** — the ticket is assigned to all admin users (default behaviour).
-- **With `AssignTo`** — the system searches for an admin user whose email matches exactly *or* whose full name matches case-insensitively. If a match is found, the ticket is assigned exclusively to that admin. If no match is found, a 400 error is returned.
+- **With `AssignTo`** — the system resolves ONE admin user, trying in order: exact email (case-insensitive) → exact full name or username (case-insensitive) → whole words of the name (`"martin"` matches `"Martin Gaido"` but not `"Marcos Martinez"`) → partial name. The first stage with a single match wins and the ticket is assigned exclusively to that admin. If a stage matches more than one admin, a 400 error lists the `Candidates` so the caller can retry with the full name or the email. If nothing matches, a 400 error is returned.
+
+**Platform:** `Platform` sets the product the ticket is about (the same list as the web ticket form). It is case-insensitive and defaults to `general`.
 
 > **Note:** Only users with admin-level access can be assigned to tickets. Regular users are not eligible.
 
@@ -28,7 +30,8 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `Title` | String | Yes | Ticket subject/title (max 200 characters) |
 | `Description` | String | Yes | Detailed description of the issue (max 20,000 characters) |
 | `Priority` | Number | Yes | Priority level: `1` (Low), `2` (Medium), `3` (High) |
-| `AssignTo` | String | No | Name or email of the admin user to assign this ticket to exclusively. If omitted, the ticket is assigned to all admins. Matching is case-insensitive for names and exact for email addresses. |
+| `Platform` | String | No | Platform the ticket is about. One of: `general`, `renaissance`, `overture`, `winners`, `soprano`, `symphony`, `sonata`, `papyrus`, `website`, `blog`, `enewsletter`, `socialmedia`, `api`, `aws`, `shopify`, `instakes`, `mcp-server`, `sweeppea-cli`, `n8n`, `other`. Case-insensitive. Defaults to `general`. |
+| `AssignTo` | String | No | Email, full name or username of the admin user to assign this ticket to exclusively. If omitted, the ticket is assigned to all admins. See the resolution order above. |
 
 ## Code Examples
 
@@ -45,7 +48,7 @@ curl -X POST "https://api-v3.sweeppea.com/tickets/create" \
   }'
 ```
 
-### cURL — Assign to a specific admin
+### cURL — Specific platform and admin
 
 ```bash
 curl -X POST "https://api-v3.sweeppea.com/tickets/create" \
@@ -55,6 +58,7 @@ curl -X POST "https://api-v3.sweeppea.com/tickets/create" \
     "Title": "Issue with sweepstakes entry",
     "Description": "Users are unable to submit entries on the mobile version of the entry page",
     "Priority": 2,
+    "Platform": "renaissance",
     "AssignTo": "support@yourdomain.com"
   }'
 ```
@@ -72,6 +76,7 @@ const response = await fetch('https://api-v3.sweeppea.com/tickets/create', {
     Title: 'Issue with sweepstakes entry',
     Description: 'Users are unable to submit entries on the mobile version of the entry page',
     Priority: 2,
+    Platform: 'renaissance', // optional, defaults to 'general'
     AssignTo: 'support@yourdomain.com' // optional
   })
 });
@@ -94,6 +99,7 @@ payload = {
     "Title": "Issue with sweepstakes entry",
     "Description": "Users are unable to submit entries on the mobile version of the entry page",
     "Priority": 2,
+    "Platform": "renaissance",  # optional, defaults to "general"
     "AssignTo": "support@yourdomain.com"  # optional
 }
 
@@ -115,7 +121,7 @@ When `AssignTo` is omitted, `AssignedTo` is `null` (assigned to all admins). Whe
     "CaseNumber": "2650478",
     "Subject": "Issue with sweepstakes entry",
     "Priority": 2,
-    "ResourceAffected": "General",
+    "ResourceAffected": "renaissance",
     "AssignedTo": {
       "FullName": "Admin User",
       "Email": "support@yourdomain.com"
@@ -143,7 +149,8 @@ When `AssignTo` is omitted, `AssignedTo` is `null` (assigned to all admins). Whe
       "Title": "string (required) — Ticket subject/title, max 200 characters",
       "Description": "string (required) — Detailed description of the issue, max 20,000 characters",
       "Priority": "number (required) — Priority level: 1 (Low), 2 (Medium), 3 (High)",
-      "AssignTo": "string (optional) — Name or email of an admin user to assign the ticket to exclusively. If omitted, the ticket is assigned to all admins. Only users with admin-level access can be assigned."
+      "Platform": "string (optional) — Platform the ticket is about. One of: general, renaissance, overture, winners, soprano, symphony, sonata, papyrus, website, blog, enewsletter, socialmedia, api, aws, shopify, instakes, mcp-server, sweeppea-cli, n8n, other. Case-insensitive. Defaults to \"general\".",
+      "AssignTo": "string (optional) — Email, full name or username of an admin user to assign the ticket to exclusively. Resolution order: exact email, exact full name or username, then a partial name match only when it identifies exactly ONE admin (an ambiguous name returns 400 with the candidates). If omitted, the ticket is assigned to all admins. Only users with admin-level access can be assigned."
     }
   }
 }
@@ -156,6 +163,27 @@ When `AssignTo` is omitted, `AssignedTo` is `null` (assigned to all admins). Whe
   "Response": false,
   "Message": "Invalid Priority Value. Must be 1 (Low), 2 (Medium), or 3 (High)",
   "Code": 400
+}
+```
+
+**400 Bad Request — Invalid Platform**
+
+```json
+{
+  "Response": false,
+  "Message": "Invalid Platform value. Must be one of: general, renaissance, overture, winners, soprano, symphony, sonata, papyrus, website, blog, enewsletter, socialmedia, api, aws, shopify, instakes, mcp-server, sweeppea-cli, n8n, other",
+  "Code": 400
+}
+```
+
+**400 Bad Request — Ambiguous Admin Name**
+
+```json
+{
+  "Response": false,
+  "Message": "\"alex\" matches more than one admin user (Alex Smith, Alex Johnson). Provide the full name or the email of the admin to assign.",
+  "Code": 400,
+  "Candidates": ["Alex Smith", "Alex Johnson"]
 }
 ```
 
