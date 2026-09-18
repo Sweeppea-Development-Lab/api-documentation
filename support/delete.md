@@ -120,6 +120,18 @@ print(response.json())
 }
 ```
 
+**409 Conflict**
+
+The ticket is locked while our engineering team works on it (an engineering issue is still open or a fix is still in progress). It can be deleted once that work is finished.
+
+```json
+{
+  "Response": false,
+  "Message": "Ticket ABC1234 is locked while our engineering team works on it. It can be deleted once that work is finished.",
+  "Code": 409
+}
+```
+
 **500 Internal Server Error**
 
 ```json
