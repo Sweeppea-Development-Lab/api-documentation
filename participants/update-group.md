@@ -113,7 +113,14 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Group name already exists for this sweepstakes"
+  "Message": "Group name already exists for this sweepstakes",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "GroupToken": "string (required) \u2014 UUID v4 of the group",
+      "GroupName": "string (required) \u2014 new group name. Must be unique in the sweepstakes"
+    }
+  }
 }
 ```
 

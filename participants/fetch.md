@@ -150,6 +150,16 @@ print(response.json())
 {
   "Response": false,
   "Message": "Invalid or Missing SweepstakesToken",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes (sweepstakesToken is also accepted)",
+      "Page": "number (optional) \u2014 page number, starting at 1",
+      "Search": "string (optional) \u2014 matches email or phone number",
+      "OptInDate": "string (optional) \u2014 exact registration date, YYYY-MM-DD",
+      "StartDate": "string (optional) \u2014 range start, YYYY-MM-DD",
+      "EndDate": "string (optional) \u2014 range end, YYYY-MM-DD"
+    }
+  },
   "Code": 400
 }
 ```

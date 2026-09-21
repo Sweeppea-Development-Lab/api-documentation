@@ -143,7 +143,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid or Missing Bearer Token",
+  "Message": "Missing or invalid Bearer token. Send your API token in the Authorization header as: Authorization: Bearer YOUR_API_TOKEN",
   "Code": 401
 }
 ```
@@ -152,7 +152,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid API Token",
+  "Message": "Invalid API token. It does not match any account.",
   "Code": 403
 }
 ```
@@ -162,6 +162,16 @@ print(response.json())
 {
   "Response": false,
   "Message": "Missing Required Field: SweepstakesToken is required",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "SweepstakesName": "string (optional) \u2014 new name, max 200 characters",
+      "StartDate": "string (optional) \u2014 new start date, YYYY-MM-DD",
+      "EndDate": "string (optional) \u2014 new end date, YYYY-MM-DD",
+      "StartTime": "string (optional) \u2014 new start time, HH:MM (24-hour)",
+      "EndTime": "string (optional) \u2014 new end time, HH:MM (24-hour)"
+    }
+  },
   "Code": 400
 }
 ```
@@ -180,6 +190,16 @@ print(response.json())
 {
   "Response": false,
   "Message": "SweepstakesName Exceeds Maximum Length of 200 Characters",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "SweepstakesName": "string (optional) \u2014 new name, max 200 characters",
+      "StartDate": "string (optional) \u2014 new start date, YYYY-MM-DD",
+      "EndDate": "string (optional) \u2014 new end date, YYYY-MM-DD",
+      "StartTime": "string (optional) \u2014 new start time, HH:MM (24-hour)",
+      "EndTime": "string (optional) \u2014 new end time, HH:MM (24-hour)"
+    }
+  },
   "Code": 400
 }
 ```
@@ -189,6 +209,16 @@ print(response.json())
 {
   "Response": false,
   "Message": "StartDate Cannot Be in the Past. Must Be Today or Later",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "SweepstakesName": "string (optional) \u2014 new name, max 200 characters",
+      "StartDate": "string (optional) \u2014 new start date, YYYY-MM-DD",
+      "EndDate": "string (optional) \u2014 new end date, YYYY-MM-DD",
+      "StartTime": "string (optional) \u2014 new start time, HH:MM (24-hour)",
+      "EndTime": "string (optional) \u2014 new end time, HH:MM (24-hour)"
+    }
+  },
   "Code": 400
 }
 ```
@@ -198,6 +228,16 @@ print(response.json())
 {
   "Response": false,
   "Message": "EndDate Cannot Be Earlier Than StartDate",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "SweepstakesName": "string (optional) \u2014 new name, max 200 characters",
+      "StartDate": "string (optional) \u2014 new start date, YYYY-MM-DD",
+      "EndDate": "string (optional) \u2014 new end date, YYYY-MM-DD",
+      "StartTime": "string (optional) \u2014 new start time, HH:MM (24-hour)",
+      "EndTime": "string (optional) \u2014 new end time, HH:MM (24-hour)"
+    }
+  },
   "Code": 400
 }
 ```
@@ -207,6 +247,16 @@ print(response.json())
 {
   "Response": false,
   "Message": "Invalid StartTime Format. Use HH:MM (24-hour format)",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "SweepstakesName": "string (optional) \u2014 new name, max 200 characters",
+      "StartDate": "string (optional) \u2014 new start date, YYYY-MM-DD",
+      "EndDate": "string (optional) \u2014 new end date, YYYY-MM-DD",
+      "StartTime": "string (optional) \u2014 new start time, HH:MM (24-hour)",
+      "EndTime": "string (optional) \u2014 new end time, HH:MM (24-hour)"
+    }
+  },
   "Code": 400
 }
 ```
@@ -216,6 +266,16 @@ print(response.json())
 {
   "Response": false,
   "Message": "No Fields to Update",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "SweepstakesName": "string (optional) \u2014 new name, max 200 characters",
+      "StartDate": "string (optional) \u2014 new start date, YYYY-MM-DD",
+      "EndDate": "string (optional) \u2014 new end date, YYYY-MM-DD",
+      "StartTime": "string (optional) \u2014 new start time, HH:MM (24-hour)",
+      "EndTime": "string (optional) \u2014 new end time, HH:MM (24-hour)"
+    }
+  },
   "Code": 400
 }
 ```

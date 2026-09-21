@@ -148,6 +148,27 @@ print(response.json())
 {
   "Response": false,
   "Message": "EventToken is Required",
+  "Help": {
+    "ExpectedBody": {
+      "EventToken": "string (required) \u2014 UUID v4 of the calendar event",
+      "EventTitle": "string (optional) \u2014 new title",
+      "EventStartDate": "string (optional) \u2014 new start date, YYYY-MM-DD",
+      "EventEndDate": "string (optional) \u2014 new end date, YYYY-MM-DD. Cannot be moved into the past",
+      "EventStartTime": "string (optional) \u2014 new start time, HH:MM (24-hour)",
+      "EventEndTime": "string (optional) \u2014 new end time, HH:MM (24-hour)",
+      "EventAllDay": "boolean (optional) \u2014 all-day event",
+      "EventDescription": "string (optional) \u2014 new description",
+      "EventLocation": "string (optional) \u2014 new location",
+      "EventURL": "string (optional) \u2014 new related URL",
+      "EventColor": "string (optional) \u2014 new colour",
+      "EventStatus": "string (optional) \u2014 new status",
+      "Completed": "boolean (optional) \u2014 mark the event as completed",
+      "PrivateEvent": "boolean (optional) \u2014 mark the event as private",
+      "SMSNotification": "boolean (optional) \u2014 send an SMS notification",
+      "Latitude": "number (optional) \u2014 latitude of the location",
+      "Longitude": "number (optional) \u2014 longitude of the location"
+    }
+  },
   "Code": 400
 }
 ```
@@ -158,6 +179,27 @@ print(response.json())
 {
   "Response": false,
   "Message": "Cannot Update Events To The Past",
+  "Help": {
+    "ExpectedBody": {
+      "EventToken": "string (required) \u2014 UUID v4 of the calendar event",
+      "EventTitle": "string (optional) \u2014 new title",
+      "EventStartDate": "string (optional) \u2014 new start date, YYYY-MM-DD",
+      "EventEndDate": "string (optional) \u2014 new end date, YYYY-MM-DD. Cannot be moved into the past",
+      "EventStartTime": "string (optional) \u2014 new start time, HH:MM (24-hour)",
+      "EventEndTime": "string (optional) \u2014 new end time, HH:MM (24-hour)",
+      "EventAllDay": "boolean (optional) \u2014 all-day event",
+      "EventDescription": "string (optional) \u2014 new description",
+      "EventLocation": "string (optional) \u2014 new location",
+      "EventURL": "string (optional) \u2014 new related URL",
+      "EventColor": "string (optional) \u2014 new colour",
+      "EventStatus": "string (optional) \u2014 new status",
+      "Completed": "boolean (optional) \u2014 mark the event as completed",
+      "PrivateEvent": "boolean (optional) \u2014 mark the event as private",
+      "SMSNotification": "boolean (optional) \u2014 send an SMS notification",
+      "Latitude": "number (optional) \u2014 latitude of the location",
+      "Longitude": "number (optional) \u2014 longitude of the location"
+    }
+  },
   "Code": 400
 }
 ```
@@ -167,7 +209,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid or Missing Bearer Token",
+  "Message": "Missing or invalid Bearer token. Send your API token in the Authorization header as: Authorization: Bearer YOUR_API_TOKEN",
   "Code": 401
 }
 ```
@@ -177,7 +219,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid API Token",
+  "Message": "Invalid API token. It does not match any account.",
   "Code": 403
 }
 ```
@@ -197,7 +239,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Internal Server Error",
+  "Message": "Internal server error. Please try again; if it persists, contact support with the time of this request.",
   "Code": 500
 }
 ```

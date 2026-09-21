@@ -126,7 +126,7 @@ with open("downloaded-file", "wb") as f:
     "ExpiresIn": 900,
     "ExpiresAt": "2026-04-24T15:40:00.000Z"
   },
-  "Message": "(OK) File URL generated successfully."
+  "Message": "File URL generated successfully."
 }
 ```
 
@@ -151,7 +151,7 @@ with open("downloaded-file", "wb") as f:
 ```json
 {
   "Response": false,
-  "Message": "Invalid or Missing Bearer Token",
+  "Message": "Missing or invalid Bearer token. Send your API token in the Authorization header as: Authorization: Bearer YOUR_API_TOKEN",
   "Code": 401
 }
 ```
@@ -161,7 +161,7 @@ with open("downloaded-file", "wb") as f:
 ```json
 {
   "Response": false,
-  "Message": "Invalid API Token",
+  "Message": "Invalid API token. It does not match any account.",
   "Code": 403
 }
 ```
@@ -186,7 +186,7 @@ with open("downloaded-file", "wb") as f:
 ```json
 {
   "Response": false,
-  "Message": "Internal Server Error",
+  "Message": "Internal server error. Please try again; if it persists, contact support with the time of this request.",
   "Code": 500
 }
 ```

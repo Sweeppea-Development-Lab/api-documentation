@@ -86,7 +86,12 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Search parameter is required",
+  "Message": "Missing required parameter: Search.",
+  "Help": {
+    "ExpectedBody": {
+      "Search": "string (required) \u2014 zip code or city to look up"
+    }
+  },
   "Code": 400
 }
 ```

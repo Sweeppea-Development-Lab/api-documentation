@@ -110,6 +110,14 @@ print(response.json())
 {
   "Response": false,
   "Message": "Missing Required Field: NoteToken is required",
+  "Help": {
+    "ExpectedBody": {
+      "NoteToken": "string (required) \u2014 UUID v4 of the note",
+      "Title": "string (optional) \u2014 new title, max 100 characters. Must be unique in your account",
+      "Note": "string (optional) \u2014 new body, max 100,000 characters",
+      "Pinned": "boolean (optional) \u2014 pin or unpin the note"
+    }
+  },
   "Code": 400
 }
 ```
@@ -120,6 +128,14 @@ print(response.json())
 {
   "Response": false,
   "Message": "No Fields to Update",
+  "Help": {
+    "ExpectedBody": {
+      "NoteToken": "string (required) \u2014 UUID v4 of the note",
+      "Title": "string (optional) \u2014 new title, max 100 characters. Must be unique in your account",
+      "Note": "string (optional) \u2014 new body, max 100,000 characters",
+      "Pinned": "boolean (optional) \u2014 pin or unpin the note"
+    }
+  },
   "Code": 400
 }
 ```
@@ -130,6 +146,14 @@ print(response.json())
 {
   "Response": false,
   "Message": "Title Exceeds Maximum Length of 100 Characters",
+  "Help": {
+    "ExpectedBody": {
+      "NoteToken": "string (required) \u2014 UUID v4 of the note",
+      "Title": "string (optional) \u2014 new title, max 100 characters. Must be unique in your account",
+      "Note": "string (optional) \u2014 new body, max 100,000 characters",
+      "Pinned": "boolean (optional) \u2014 pin or unpin the note"
+    }
+  },
   "Code": 400
 }
 ```
@@ -140,6 +164,14 @@ print(response.json())
 {
   "Response": false,
   "Message": "Note Exceeds Maximum Length of 100000 Characters",
+  "Help": {
+    "ExpectedBody": {
+      "NoteToken": "string (required) \u2014 UUID v4 of the note",
+      "Title": "string (optional) \u2014 new title, max 100 characters. Must be unique in your account",
+      "Note": "string (optional) \u2014 new body, max 100,000 characters",
+      "Pinned": "boolean (optional) \u2014 pin or unpin the note"
+    }
+  },
   "Code": 400
 }
 ```
@@ -150,6 +182,14 @@ print(response.json())
 {
   "Response": false,
   "Message": "Note Title Already Exists",
+  "Help": {
+    "ExpectedBody": {
+      "NoteToken": "string (required) \u2014 UUID v4 of the note",
+      "Title": "string (optional) \u2014 new title, max 100 characters. Must be unique in your account",
+      "Note": "string (optional) \u2014 new body, max 100,000 characters",
+      "Pinned": "boolean (optional) \u2014 pin or unpin the note"
+    }
+  },
   "Code": 400
 }
 ```
@@ -159,7 +199,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid or Missing Bearer Token",
+  "Message": "Missing or invalid Bearer token. Send your API token in the Authorization header as: Authorization: Bearer YOUR_API_TOKEN",
   "Code": 401
 }
 ```
@@ -169,7 +209,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid API Token",
+  "Message": "Invalid API token. It does not match any account.",
   "Code": 403
 }
 ```
@@ -189,7 +229,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Internal Server Error",
+  "Message": "Internal server error. Please try again; if it persists, contact support with the time of this request.",
   "Code": 500
 }
 ```

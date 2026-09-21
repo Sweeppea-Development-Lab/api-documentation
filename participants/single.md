@@ -137,6 +137,14 @@ print(response.json())
 {
   "Response": false,
   "Message": "Missing Search Criteria: ParticipantToken, KeyEmail, or KeyPhoneNumber required",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "ParticipantToken": "string (one of three required) \u2014 UUID v4 of the participant",
+      "KeyEmail": "string (one of three required) \u2014 participant email address",
+      "KeyPhoneNumber": "string (one of three required) \u2014 participant phone number, 10 digits"
+    }
+  },
   "Code": 400
 }
 ```

@@ -152,6 +152,28 @@ print(response.json())
 {
   "Response": false,
   "Message": "EventTitle is Required",
+  "Help": {
+    "ExpectedBody": {
+      "EventTitle": "string (required) \u2014 title of the event",
+      "EventStartDate": "string (required) \u2014 start date, ISO format YYYY-MM-DD",
+      "EventEndDate": "string (required) \u2014 end date, ISO format YYYY-MM-DD. Cannot be in the past",
+      "EventStartTime": "string (optional) \u2014 start time, HH:MM (24-hour)",
+      "EventEndTime": "string (optional) \u2014 end time, HH:MM (24-hour)",
+      "EventAllDay": "boolean (optional) \u2014 all-day event",
+      "EventDescription": "string (optional) \u2014 description of the event",
+      "EventLocation": "string (optional) \u2014 location of the event",
+      "EventURL": "string (optional) \u2014 related URL",
+      "EventColor": "string (optional) \u2014 colour used to render the event",
+      "EventStatus": "string (optional) \u2014 status of the event",
+      "SweepstakesToken": "string (optional) \u2014 UUID v4 of the sweepstakes",
+      "PeopleInvolved": "array (optional) \u2014 people invited to the event",
+      "Notification": "boolean (optional) \u2014 send an email notification",
+      "SMSNotification": "boolean (optional) \u2014 send an SMS notification",
+      "RepeatThisEvent": "string (optional) \u2014 recurrence rule",
+      "Latitude": "number (optional) \u2014 latitude of the location",
+      "Longitude": "number (optional) \u2014 longitude of the location"
+    }
+  },
   "Code": 400
 }
 ```
@@ -162,6 +184,28 @@ print(response.json())
 {
   "Response": false,
   "Message": "Cannot Create Events In The Past",
+  "Help": {
+    "ExpectedBody": {
+      "EventTitle": "string (required) \u2014 title of the event",
+      "EventStartDate": "string (required) \u2014 start date, ISO format YYYY-MM-DD",
+      "EventEndDate": "string (required) \u2014 end date, ISO format YYYY-MM-DD. Cannot be in the past",
+      "EventStartTime": "string (optional) \u2014 start time, HH:MM (24-hour)",
+      "EventEndTime": "string (optional) \u2014 end time, HH:MM (24-hour)",
+      "EventAllDay": "boolean (optional) \u2014 all-day event",
+      "EventDescription": "string (optional) \u2014 description of the event",
+      "EventLocation": "string (optional) \u2014 location of the event",
+      "EventURL": "string (optional) \u2014 related URL",
+      "EventColor": "string (optional) \u2014 colour used to render the event",
+      "EventStatus": "string (optional) \u2014 status of the event",
+      "SweepstakesToken": "string (optional) \u2014 UUID v4 of the sweepstakes",
+      "PeopleInvolved": "array (optional) \u2014 people invited to the event",
+      "Notification": "boolean (optional) \u2014 send an email notification",
+      "SMSNotification": "boolean (optional) \u2014 send an SMS notification",
+      "RepeatThisEvent": "string (optional) \u2014 recurrence rule",
+      "Latitude": "number (optional) \u2014 latitude of the location",
+      "Longitude": "number (optional) \u2014 longitude of the location"
+    }
+  },
   "Code": 400
 }
 ```
@@ -171,7 +215,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid or Missing Bearer Token",
+  "Message": "Missing or invalid Bearer token. Send your API token in the Authorization header as: Authorization: Bearer YOUR_API_TOKEN",
   "Code": 401
 }
 ```
@@ -181,7 +225,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid API Token",
+  "Message": "Invalid API token. It does not match any account.",
   "Code": 403
 }
 ```
@@ -191,7 +235,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Internal Server Error",
+  "Message": "Internal server error. Please try again; if it persists, contact support with the time of this request.",
   "Code": 500
 }
 ```

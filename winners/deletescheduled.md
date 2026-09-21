@@ -101,7 +101,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid or Missing Bearer Token",
+  "Message": "Missing or invalid Bearer token. Send your API token in the Authorization header as: Authorization: Bearer YOUR_API_TOKEN",
   "Code": 401
 }
 ```
@@ -120,6 +120,12 @@ print(response.json())
 {
   "Response": false,
   "Message": "Missing SweepstakesToken or ScheduleToken in request body",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "ScheduleToken": "string (required) \u2014 UUID v4 of the scheduled drawing. Only a PENDING drawing can be deleted"
+    }
+  },
   "Code": 400
 }
 ```
@@ -156,6 +162,12 @@ print(response.json())
 {
   "Response": false,
   "Message": "Cannot delete scheduled drawing. Only pending drawings can be deleted",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "ScheduleToken": "string (required) \u2014 UUID v4 of the scheduled drawing. Only a PENDING drawing can be deleted"
+    }
+  },
   "Code": 400
 }
 ```

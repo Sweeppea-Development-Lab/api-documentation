@@ -105,7 +105,7 @@ print(response.json())
     "SweepstakesToken": "uuid-v4-string",
     "BonusEntries": 50
   },
-  "Message": "(OK) Bonus entries updated successfully."
+  "Message": "Bonus entries updated successfully."
 }
 ```
 

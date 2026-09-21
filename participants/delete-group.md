@@ -100,7 +100,13 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Missing required parameters: SweepstakesToken and GroupToken"
+  "Message": "Missing required parameters: SweepstakesToken and GroupToken",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "GroupToken": "string (required) \u2014 UUID v4 of the group. The primary group, a locked group, and any group still holding participants, AMOE entries or opt-outs cannot be deleted"
+    }
+  }
 }
 ```
 
@@ -109,7 +115,13 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Cannot delete primary group"
+  "Message": "Cannot delete primary group",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "GroupToken": "string (required) \u2014 UUID v4 of the group. The primary group, a locked group, and any group still holding participants, AMOE entries or opt-outs cannot be deleted"
+    }
+  }
 }
 ```
 
@@ -118,7 +130,13 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Cannot delete locked group"
+  "Message": "Cannot delete locked group",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "GroupToken": "string (required) \u2014 UUID v4 of the group. The primary group, a locked group, and any group still holding participants, AMOE entries or opt-outs cannot be deleted"
+    }
+  }
 }
 ```
 
@@ -127,7 +145,13 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Cannot delete group with participants"
+  "Message": "Cannot delete group with participants",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "GroupToken": "string (required) \u2014 UUID v4 of the group. The primary group, a locked group, and any group still holding participants, AMOE entries or opt-outs cannot be deleted"
+    }
+  }
 }
 ```
 
@@ -136,7 +160,13 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Cannot delete group with AMOE entries"
+  "Message": "Cannot delete group with AMOE entries",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "GroupToken": "string (required) \u2014 UUID v4 of the group. The primary group, a locked group, and any group still holding participants, AMOE entries or opt-outs cannot be deleted"
+    }
+  }
 }
 ```
 
@@ -145,7 +175,13 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Cannot delete group with optouts"
+  "Message": "Cannot delete group with optouts",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "GroupToken": "string (required) \u2014 UUID v4 of the group. The primary group, a locked group, and any group still holding participants, AMOE entries or opt-outs cannot be deleted"
+    }
+  }
 }
 ```
 
@@ -154,7 +190,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid or Missing Bearer Token",
+  "Message": "Missing or invalid Bearer token. Send your API token in the Authorization header as: Authorization: Bearer YOUR_API_TOKEN",
   "Code": 401
 }
 ```
@@ -164,7 +200,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid API Token",
+  "Message": "Invalid API token. It does not match any account.",
   "Code": 403
 }
 ```

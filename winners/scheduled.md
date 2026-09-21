@@ -168,7 +168,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid or Missing Bearer Token",
+  "Message": "Missing or invalid Bearer token. Send your API token in the Authorization header as: Authorization: Bearer YOUR_API_TOKEN",
   "Code": 401
 }
 ```
@@ -177,7 +177,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid API token, call support.",
+  "Message": "Invalid API token. It does not match any account.",
   "Code": 403
 }
 ```
@@ -187,6 +187,30 @@ print(response.json())
 {
   "Response": false,
   "Message": "Invalid parameters in body object, read documentation.",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "HowManyWinnersToPick": "number (required) \u2014 how many winners to draw. Must be at least 1",
+      "Timezone": "number (required) \u2014 TimezoneId. Use /tools/timezones to list them",
+      "ScheduleMode": "string (optional) \u2014 how the drawing repeats",
+      "Frequency": "string (optional) \u2014 frequency when the drawing repeats",
+      "DayOfTheWeek": "string (optional) \u2014 day of the week for a weekly drawing",
+      "WeekOfTheMonth": "string (optional) \u2014 week of the month for a monthly drawing",
+      "EndDate": "string (optional) \u2014 date of the drawing, YYYY-MM-DD. Must be in the present or future",
+      "EndTime": "string (optional) \u2014 time of the drawing, HH:MM (24-hour)",
+      "DeliveryTime": "string (optional) \u2014 time the notification is sent, HH:MM (24-hour)",
+      "Group": "string (optional) \u2014 UUID v4 of the group to draw from",
+      "Winners": "array (optional) \u2014 pre-selected winners",
+      "Message": "string (optional) \u2014 message sent to the winners",
+      "SelectedAction": "string (optional) \u2014 action taken once the drawing runs",
+      "Automation": "boolean (optional) \u2014 run the drawing automatically",
+      "PublishToWinnersPage": "boolean (optional) \u2014 publish the winners to the public winners page",
+      "AddDrawingToCalendar": "boolean (optional) \u2014 add the drawing to your calendar",
+      "SendCopyToMe": "boolean (optional) \u2014 send yourself a copy of the notification",
+      "IncludeOptedOutParticipants": "boolean (optional) \u2014 include participants who opted out",
+      "DoNotIncludeSpamParticipants": "boolean (optional) \u2014 exclude participants flagged as spam"
+    }
+  },
   "Code": 400
 }
 ```
@@ -223,6 +247,30 @@ print(response.json())
 {
   "Response": false,
   "Message": "No eligible participants found for this sweepstakes. At least one participant without winner status is required.",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "HowManyWinnersToPick": "number (required) \u2014 how many winners to draw. Must be at least 1",
+      "Timezone": "number (required) \u2014 TimezoneId. Use /tools/timezones to list them",
+      "ScheduleMode": "string (optional) \u2014 how the drawing repeats",
+      "Frequency": "string (optional) \u2014 frequency when the drawing repeats",
+      "DayOfTheWeek": "string (optional) \u2014 day of the week for a weekly drawing",
+      "WeekOfTheMonth": "string (optional) \u2014 week of the month for a monthly drawing",
+      "EndDate": "string (optional) \u2014 date of the drawing, YYYY-MM-DD. Must be in the present or future",
+      "EndTime": "string (optional) \u2014 time of the drawing, HH:MM (24-hour)",
+      "DeliveryTime": "string (optional) \u2014 time the notification is sent, HH:MM (24-hour)",
+      "Group": "string (optional) \u2014 UUID v4 of the group to draw from",
+      "Winners": "array (optional) \u2014 pre-selected winners",
+      "Message": "string (optional) \u2014 message sent to the winners",
+      "SelectedAction": "string (optional) \u2014 action taken once the drawing runs",
+      "Automation": "boolean (optional) \u2014 run the drawing automatically",
+      "PublishToWinnersPage": "boolean (optional) \u2014 publish the winners to the public winners page",
+      "AddDrawingToCalendar": "boolean (optional) \u2014 add the drawing to your calendar",
+      "SendCopyToMe": "boolean (optional) \u2014 send yourself a copy of the notification",
+      "IncludeOptedOutParticipants": "boolean (optional) \u2014 include participants who opted out",
+      "DoNotIncludeSpamParticipants": "boolean (optional) \u2014 exclude participants flagged as spam"
+    }
+  },
   "Code": 400
 }
 ```
@@ -232,6 +280,30 @@ print(response.json())
 {
   "Response": false,
   "Message": "Invalid HowManyWinnersToPick parameter. Must be at least 1.",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "HowManyWinnersToPick": "number (required) \u2014 how many winners to draw. Must be at least 1",
+      "Timezone": "number (required) \u2014 TimezoneId. Use /tools/timezones to list them",
+      "ScheduleMode": "string (optional) \u2014 how the drawing repeats",
+      "Frequency": "string (optional) \u2014 frequency when the drawing repeats",
+      "DayOfTheWeek": "string (optional) \u2014 day of the week for a weekly drawing",
+      "WeekOfTheMonth": "string (optional) \u2014 week of the month for a monthly drawing",
+      "EndDate": "string (optional) \u2014 date of the drawing, YYYY-MM-DD. Must be in the present or future",
+      "EndTime": "string (optional) \u2014 time of the drawing, HH:MM (24-hour)",
+      "DeliveryTime": "string (optional) \u2014 time the notification is sent, HH:MM (24-hour)",
+      "Group": "string (optional) \u2014 UUID v4 of the group to draw from",
+      "Winners": "array (optional) \u2014 pre-selected winners",
+      "Message": "string (optional) \u2014 message sent to the winners",
+      "SelectedAction": "string (optional) \u2014 action taken once the drawing runs",
+      "Automation": "boolean (optional) \u2014 run the drawing automatically",
+      "PublishToWinnersPage": "boolean (optional) \u2014 publish the winners to the public winners page",
+      "AddDrawingToCalendar": "boolean (optional) \u2014 add the drawing to your calendar",
+      "SendCopyToMe": "boolean (optional) \u2014 send yourself a copy of the notification",
+      "IncludeOptedOutParticipants": "boolean (optional) \u2014 include participants who opted out",
+      "DoNotIncludeSpamParticipants": "boolean (optional) \u2014 exclude participants flagged as spam"
+    }
+  },
   "Code": 400
 }
 ```
@@ -241,6 +313,30 @@ print(response.json())
 {
   "Response": false,
   "Message": "Not enough eligible participants. Requested: 5, Available: 3",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "HowManyWinnersToPick": "number (required) \u2014 how many winners to draw. Must be at least 1",
+      "Timezone": "number (required) \u2014 TimezoneId. Use /tools/timezones to list them",
+      "ScheduleMode": "string (optional) \u2014 how the drawing repeats",
+      "Frequency": "string (optional) \u2014 frequency when the drawing repeats",
+      "DayOfTheWeek": "string (optional) \u2014 day of the week for a weekly drawing",
+      "WeekOfTheMonth": "string (optional) \u2014 week of the month for a monthly drawing",
+      "EndDate": "string (optional) \u2014 date of the drawing, YYYY-MM-DD. Must be in the present or future",
+      "EndTime": "string (optional) \u2014 time of the drawing, HH:MM (24-hour)",
+      "DeliveryTime": "string (optional) \u2014 time the notification is sent, HH:MM (24-hour)",
+      "Group": "string (optional) \u2014 UUID v4 of the group to draw from",
+      "Winners": "array (optional) \u2014 pre-selected winners",
+      "Message": "string (optional) \u2014 message sent to the winners",
+      "SelectedAction": "string (optional) \u2014 action taken once the drawing runs",
+      "Automation": "boolean (optional) \u2014 run the drawing automatically",
+      "PublishToWinnersPage": "boolean (optional) \u2014 publish the winners to the public winners page",
+      "AddDrawingToCalendar": "boolean (optional) \u2014 add the drawing to your calendar",
+      "SendCopyToMe": "boolean (optional) \u2014 send yourself a copy of the notification",
+      "IncludeOptedOutParticipants": "boolean (optional) \u2014 include participants who opted out",
+      "DoNotIncludeSpamParticipants": "boolean (optional) \u2014 exclude participants flagged as spam"
+    }
+  },
   "Code": 400
 }
 ```
@@ -250,6 +346,30 @@ print(response.json())
 {
   "Response": false,
   "Message": "Invalid schedule date/time. The scheduled drawing must be in the present or future.",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes",
+      "HowManyWinnersToPick": "number (required) \u2014 how many winners to draw. Must be at least 1",
+      "Timezone": "number (required) \u2014 TimezoneId. Use /tools/timezones to list them",
+      "ScheduleMode": "string (optional) \u2014 how the drawing repeats",
+      "Frequency": "string (optional) \u2014 frequency when the drawing repeats",
+      "DayOfTheWeek": "string (optional) \u2014 day of the week for a weekly drawing",
+      "WeekOfTheMonth": "string (optional) \u2014 week of the month for a monthly drawing",
+      "EndDate": "string (optional) \u2014 date of the drawing, YYYY-MM-DD. Must be in the present or future",
+      "EndTime": "string (optional) \u2014 time of the drawing, HH:MM (24-hour)",
+      "DeliveryTime": "string (optional) \u2014 time the notification is sent, HH:MM (24-hour)",
+      "Group": "string (optional) \u2014 UUID v4 of the group to draw from",
+      "Winners": "array (optional) \u2014 pre-selected winners",
+      "Message": "string (optional) \u2014 message sent to the winners",
+      "SelectedAction": "string (optional) \u2014 action taken once the drawing runs",
+      "Automation": "boolean (optional) \u2014 run the drawing automatically",
+      "PublishToWinnersPage": "boolean (optional) \u2014 publish the winners to the public winners page",
+      "AddDrawingToCalendar": "boolean (optional) \u2014 add the drawing to your calendar",
+      "SendCopyToMe": "boolean (optional) \u2014 send yourself a copy of the notification",
+      "IncludeOptedOutParticipants": "boolean (optional) \u2014 include participants who opted out",
+      "DoNotIncludeSpamParticipants": "boolean (optional) \u2014 exclude participants flagged as spam"
+    }
+  },
   "Code": 400
 }
 ```

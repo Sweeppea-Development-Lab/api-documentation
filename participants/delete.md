@@ -100,6 +100,22 @@ print(response.json())
 }
 ```
 
+**400 Bad Request**
+
+```json
+{
+  "Response": false,
+  "Message": "Invalid or Missing SweepstakesToken",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) — UUID v4 of the sweepstakes",
+      "ParticipantToken": "string (required) — UUID v4 of the participant"
+    }
+  },
+  "Code": 400
+}
+```
+
 **404 Not Found**
 
 ```json

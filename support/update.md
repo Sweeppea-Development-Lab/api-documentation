@@ -102,7 +102,14 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "CaseId is required"
+  "Message": "CaseId is required",
+  "Help": {
+    "ExpectedBody": {
+      "CaseId": "string (required) \u2014 case id of the ticket. A closed ticket cannot be updated",
+      "Title": "string (optional) \u2014 new title. At least one of Title or Description is required",
+      "Description": "string (optional) \u2014 new description. At least one of Title or Description is required"
+    }
+  }
 }
 ```
 

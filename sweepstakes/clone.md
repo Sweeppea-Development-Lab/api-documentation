@@ -127,7 +127,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid or Missing Bearer Token",
+  "Message": "Missing or invalid Bearer token. Send your API token in the Authorization header as: Authorization: Bearer YOUR_API_TOKEN",
   "Code": 401
 }
 ```
@@ -136,7 +136,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid API Token",
+  "Message": "Invalid API token. It does not match any account.",
   "Code": 403
 }
 ```
@@ -155,6 +155,17 @@ print(response.json())
 {
   "Response": false,
   "Message": "Missing required parameters or validation errors",
+  "Help": {
+    "ExpectedBody": {
+      "Handler": "string (required) \u2014 handler of the sweepstakes being cloned",
+      "HandlerNew": "string (required) \u2014 handler for the new sweepstakes. Alphanumeric plus underscores, max 25 characters, and must not already be taken",
+      "SweepstakesName": "string (required) \u2014 name of the new sweepstakes, max 80 characters",
+      "StartDate": "string (required) \u2014 start date, YYYY-MM-DD",
+      "EndDate": "string (required) \u2014 end date, YYYY-MM-DD. Must be after StartDate",
+      "StartTime": "string (required) \u2014 start time, HH:MM (24-hour)",
+      "EndTime": "string (required) \u2014 end time, HH:MM (24-hour)"
+    }
+  },
   "Code": 400
 }
 ```

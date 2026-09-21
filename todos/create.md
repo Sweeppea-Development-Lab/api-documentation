@@ -129,6 +129,16 @@ print(response.json())
 {
   "Response": false,
   "Message": "Missing Required Field: Title",
+  "Help": {
+    "ExpectedBody": {
+      "Title": "string (required) \u2014 to-do title",
+      "Description": "string (optional) \u2014 to-do description",
+      "Priority": "number (optional) \u2014 1 (Low), 2 (Medium) or 3 (High)",
+      "Deadline": "string (optional) \u2014 deadline, ISO format YYYY-MM-DD",
+      "Pin": "boolean (optional) \u2014 pin the to-do to the top of the list",
+      "ResourceAffected": "string (optional) \u2014 resource the to-do refers to"
+    }
+  },
   "Code": 400
 }
 ```
@@ -137,7 +147,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid or Missing Bearer Token",
+  "Message": "Missing or invalid Bearer token. Send your API token in the Authorization header as: Authorization: Bearer YOUR_API_TOKEN",
   "Code": 401
 }
 ```
@@ -155,7 +165,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Internal Server Error",
+  "Message": "Internal server error. Please try again; if it persists, contact support with the time of this request.",
   "Code": 500
 }
 ```

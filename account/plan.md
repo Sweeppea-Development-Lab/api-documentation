@@ -107,6 +107,7 @@ print(response.json())
       "MaxStorageSize": 5000,
       "MaxParticipantsAllowed": 500000,
       "MaxApiCallsAllowed": 500000,
+      "MaxApiCallsPerMinute": 150,
       "MaxInvoicesAllowed": 100,
       "MaxSurveysAllowed": 3,
       "MaxAiTokensAllowed": 1000000,
@@ -143,6 +144,7 @@ print(response.json())
     "MaxParticipants": 500000,
     "ApiCalls": 142,
     "MaxApiCalls": 500000,
+    "MaxApiCallsPerMinute": 150,
     "Agents": 1,
     "MaxAgents": 3,
     "Emails": 620,
@@ -171,7 +173,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid or Missing Bearer Token",
+  "Message": "Missing or invalid Bearer token. Send your API token in the Authorization header as: Authorization: Bearer YOUR_API_TOKEN",
   "Code": 401
 }
 ```
@@ -181,7 +183,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid API Token",
+  "Message": "Invalid API token. It does not match any account.",
   "Code": 403
 }
 ```
@@ -191,7 +193,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Account is disabled. Please contact support.",
+  "Message": "Your account is disabled or hibernating. Contact support for more information.",
   "Code": 403
 }
 ```

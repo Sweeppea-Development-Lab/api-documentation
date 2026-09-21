@@ -113,7 +113,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Invalid or Missing Bearer Token",
+  "Message": "Missing or invalid Bearer token. Send your API token in the Authorization header as: Authorization: Bearer YOUR_API_TOKEN",
   "Code": 401
 }
 ```
@@ -132,6 +132,11 @@ print(response.json())
 {
   "Response": false,
   "Message": "Missing SweepstakesToken in request body",
+  "Help": {
+    "ExpectedBody": {
+      "SweepstakesToken": "string (required) \u2014 UUID v4 of the sweepstakes"
+    }
+  },
   "Code": 400
 }
 ```
