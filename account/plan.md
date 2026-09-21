@@ -16,6 +16,9 @@ This endpoint retrieves detailed information about the user's plan using the Api
 - **Account Status Check:** The user's account Status must be `true` (enabled). If the account is disabled (`Status = false`), the request will be rejected with a 403 error.
 - **Domain Access Control:** The user must have a wildcard domain (`*`) configured in their API domains. This allows API access from any domain. Without the wildcard domain, the request will be rejected with a 403 error.
 - **Sharing & Execution Permissions:** `AllowSurveysSharing`, `AllowInvoicesSharing`, `AllowAgentsSharing` and `AllowDripCampaignsSharing` report whether the plan allows putting each module in front of the public — publishing a survey and its link/QR/embed, sending an invoice and taking its payment, activating an agent on a website or an entry page. Creating and viewing those modules is open to every account regardless of these flags. Unlike the numeric restrictions, a plan that does not carry the key reports `false`: these shipped switched off on every plan and are granted explicitly by an administrator.
+- **Messaging Allowances:** `MaxEmailsPerMonth` and `MaxSmsPerMonth` are MONTHLY and account-wide, and `AllowEmailMessaging` / `AllowSmsMessaging` decide whether the plan may send at all. They are separate because SMS carries 10DLC registration, per-carrier daily caps and a quiet-hours regime that email does not, so a plan routinely sells one without the other. **`MaxSmsPerMonth` counts SEGMENTS, not messages:** a text longer than 160 characters, or one carrying a single emoji, is billed as more than one segment, so presenting this figure as "messages" overstates the allowance by up to 3x. `MaxEmailTemplatesAllowed` caps the saved email LAYOUTS, not the mail sent through them.
+- **Usage:** live consumption paired with the ceilings in `Data.Settings`. `Emails` and `SmsSegments` are committed sends PLUS what campaigns in flight have already reserved — a launch holding its allowance has spent it as far as the next launch is concerned, so a caller reporting delivered-only will overstate what is left. `MessagingMonth` is the calendar month in the ACCOUNT'S OWN timezone, not UTC, which is why it can differ from the caller's month on the first and last day.
+- **AI token usage is not reported** (`Notes.AiTokensUsageReported` is `false`). The monthly figure merges two separate ledgers with BYOM traffic excluded, and the platform reads it through one shared resolver that is never re-implemented; a second implementation here would drift from the number the account is actually billed against. The CEILING is reported as `Data.Settings.MaxAiTokensAllowed`.
 
 ## Code Examples
 
@@ -108,19 +111,56 @@ print(response.json())
       "MaxSurveysAllowed": 3,
       "MaxAiTokensAllowed": 1000000,
       "MaxAgentsAllowed": 3,
+      "MaxEmailsPerMonth": 1000,
+      "MaxSmsPerMonth": 1000,
+      "MaxEmailTemplatesAllowed": 5,
       "AllowSurveysSharing": false,
       "AllowInvoicesSharing": false,
       "AllowAgentsSharing": false,
-      "AllowDripCampaignsSharing": false
+      "AllowDripCampaignsSharing": false,
+      "AllowEmailMessaging": false,
+      "AllowSmsMessaging": false
     },
     "Primary": false,
     "Locked": true,
-    "CreationDate": "2025-06-02T01:30:10.261Z"
+    "CreationDate": "2025-06-02T01:30:10.261Z",
+    "__v": 0
   },
   "Telemetry": {
     "DataConsumed": 0,
     "APICalls": 142,
     "MaxAPICalls": 500000
+  },
+  "Usage": {
+    "Sweepstakes": 4,
+    "MaxSweepstakes": 10,
+    "ArchivedSweepstakes": 1,
+    "Surveys": 2,
+    "MaxSurveys": 3,
+    "Invoices": 17,
+    "MaxInvoices": 100,
+    "Participants": 12840,
+    "MaxParticipants": 500000,
+    "ApiCalls": 142,
+    "MaxApiCalls": 500000,
+    "Agents": 1,
+    "MaxAgents": 3,
+    "Emails": 620,
+    "MaxEmails": 1000,
+    "SmsSegments": 0,
+    "MaxSmsSegments": 1000,
+    "MessagingMonth": "2026-09",
+    "Breakdown": {
+      "EntryPageParticipants": 12100,
+      "AmoeParticipants": 740
+    },
+    "Notes": {
+      "ArchivedCountTowardLimit": true,
+      "UnlimitedWhenMaxIsZero": true,
+      "SmsCountedInSegments": true,
+      "MessagingIncludesReserved": true,
+      "AiTokensUsageReported": false
+    }
   }
 }
 ```
