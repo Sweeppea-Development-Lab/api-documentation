@@ -15,6 +15,11 @@ This endpoint allows you to add participants to your sweepstakes. Use this to ma
 > - Fields must match exactly with the Entry Page fields in the same order and structure.
 > - To obtain the correct field mapping for your sweepstakes, consult the [Fetch Entry Page Fields](https://apidocs.sweeppea.com/entrypage/fields.html) endpoint.
 
+> **Email & SMS Campaigns:**
+> - A participant created through this endpoint can receive your email and SMS campaigns. By calling it you warrant that the person registered themselves and agreed to receive marketing messages from you.
+> - Do not use this endpoint to upload an existing contact list. Lists belong in the Participants → Tools → Import tool, whose contacts are stored and can take part in draws but are excluded from every campaign — a column in a file is not consent.
+> - Every campaign still skips anyone who unsubscribed, replied STOP, bounced or complained.
+
 ## Authentication
 
 This endpoint requires Bearer token authentication via the `Authorization` header.
