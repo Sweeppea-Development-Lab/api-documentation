@@ -10,7 +10,7 @@ Delete a single sweepstakes by providing the SweepstakesToken. This endpoint per
 
 This endpoint allows you to delete a sweepstakes and all its related data by providing the SweepstakesToken. The sweepstakes must belong to the authenticated user.
 
-**What gets deleted:** Sweepstakes record, participants, entry pages, statistics, groups, rules, calendar events, short links, coupons, automations, and all related data. Email & SMS campaigns of this sweepstakes are also removed; any still sending are stopped first and their unused monthly allowance is returned to the account. Opt-outs (unsubscribes and STOP replies) are kept, because an opt-out applies to the whole account.
+**What gets deleted:** Sweepstakes record, participants, entry pages, statistics, groups, rules, calendar events, short links, coupons, automations, surveys (questions, responses, statistics and uploaded media), the AI agents of this sweepstakes (conversations, leads, polls, tasks, knowledge and their files), face validation sessions, and all related data. Email & SMS campaigns of this sweepstakes are also removed; any still sending are stopped first and their unused monthly allowance is returned to the account. Opt-outs (unsubscribes and STOP replies) are kept, because an opt-out applies to the whole account.
 
 > **Note:** This action is permanent and cannot be undone.
 

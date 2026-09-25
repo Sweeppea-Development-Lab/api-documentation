@@ -38,6 +38,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `EntryPageFields.KeyEmail`       | String | Yes      | Participant's email address. Length between 5 and 100 characters.                                     |
 | `EntryPageFields.BonusEntries`   | Number | No       | Number of bonus entries (default: 0)                                                                   |
 | `EntryPageFields.Fields`         | Object | Yes      | Object containing the participant's entry page field values                                            |
+| `Consent`                        | Object | No       | Marketing consent per channel: `{ "Email": true, "Sms": false }`. Omitted keys follow the API default (opted in, on your warranty under the AUP); an explicit `false` is always honoured and keeps that channel transactional-only for this participant. Any other key or a non-boolean value returns `400` (`PART-0018`). |
 
 ## Request Example
 
