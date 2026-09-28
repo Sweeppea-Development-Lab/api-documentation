@@ -23,7 +23,7 @@ All parameters are optional.
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `search` | String | No | Search term to filter tickets by Subject or Description (case-insensitive) |
-| `platform` | String | No | Filter by ResourceAffected (e.g., 'renaissance', 'api', 'general', 'overture', 'winners', etc.) |
+| `platform` | String | No | Filter by platform (ResourceAffected). One of: `general`, `renaissance`, `overture`, `winners`, `soprano`, `symphony`, `sonata`, `papyrus`, `website`, `blog`, `enewsletter`, `socialmedia`, `api`, `aws`, `shopify`, `instakes`, `mcp-server`, `sweeppea-cli`, `n8n`, `other`. Case-insensitive; common spellings (`Shopify App`, `mcp`, `cli`, `Command Line Interface (CLI)`) are aliased. An unrecognized value returns `400`. |
 | `priority` | Number | No | Filter by Priority: 1 (Low), 2 (Medium), 3 (High) |
 | `page` | Number | No | Page number for pagination (default: 1, 20 tickets per page) |
 
@@ -114,6 +114,29 @@ print(response.json())
         "ResourceAffected": "api"
       }
     ]
+  },
+  "Telemetry": {
+    "DataConsumed": 0,
+    "APICalls": 142,
+    "MaxAPICalls": 100000
+  }
+}
+```
+
+**400 Bad Request**
+
+```json
+{
+  "Response": false,
+  "Message": "Invalid platform value. Must be one of: general, renaissance, overture, winners, soprano, symphony, sonata, papyrus, website, blog, enewsletter, socialmedia, api, aws, shopify, instakes, mcp-server, sweeppea-cli, n8n, other",
+  "Code": 400,
+  "Help": {
+    "ExpectedBody": {
+      "search": "string (optional) — Case-insensitive text matched against Subject or Description",
+      "platform": "string (optional) — Filter by platform (ResourceAffected). One of: general, renaissance, overture, winners, soprano, symphony, sonata, papyrus, website, blog, enewsletter, socialmedia, api, aws, shopify, instakes, mcp-server, sweeppea-cli, n8n, other. Case-insensitive; common spellings (Shopify App, mcp, cli, Command Line Interface (CLI)) are aliased.",
+      "priority": "number (optional) — Filter by priority: 1 (Low), 2 (Medium), 3 (High)",
+      "page": "number (optional) — Page number, 20 tickets per page. Defaults to 1."
+    }
   }
 }
 ```
@@ -151,5 +174,6 @@ print(response.json())
 ## Notes
 
 - Results are paginated at 20 tickets per page.
+- `Telemetry.APICalls` is the number of API calls this API token made since the start of the current month; `Telemetry.MaxAPICalls` is the monthly limit of the account's plan.
 - The `Subject` field is truncated to a maximum of 100 characters in the list response.
 - Closed tickets have `Status = true` internally.

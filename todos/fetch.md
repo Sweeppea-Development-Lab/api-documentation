@@ -130,6 +130,11 @@ print(response.json())
         "ResourceAffected": "api"
       }
     ]
+  },
+  "Telemetry": {
+    "DataConsumed": 0,
+    "APICalls": 142,
+    "MaxAPICalls": 100000
   }
 }
 ```

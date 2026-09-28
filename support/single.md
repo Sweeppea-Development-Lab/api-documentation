@@ -125,6 +125,11 @@ print(response.json())
     "Status": false,
     "AttachmentInfo": {},
     "GitHubIssue": {}
+  },
+  "Telemetry": {
+    "DataConsumed": 0,
+    "APICalls": 142,
+    "MaxAPICalls": 100000
   }
 }
 ```

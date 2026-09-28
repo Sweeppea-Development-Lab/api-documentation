@@ -30,14 +30,15 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `EntryPageAbbreviatedRules` | String |  |
 | `EntryPageWidth` | Number | Coherent numeric value |
 | `EntryPageWidthMeasure` | String | Only `"%"` or `"px"` |
-| `EntryPageBorder` | String | e.g. `"0px dotted black"` |
-| `EntryPageBackgroundColor` | Object | `{ "hexa": "#FFF" }` |
-| `EntryPageBackgroundInnerColor` | Object | `{ "hexa": "#FFF" }` |
+| `EntryPageBorder` | String | `"<0-99>px <style> <color>"` — style one of `none`, `solid`, `dotted`, `dashed`, `double`, `groove`, `ridge`, `inset`, `outset`, `hidden`; color a name or hex. e.g. `"0px dotted black"`, `"1px solid #333333"` |
+| `EntryPageBackgroundColor` | String \| Object | Page background. Hex string (`"#1A2B3C"`, `"#1A2B3C80"`) or object `{ "hexa": "#1A2B3CFF" }` / `{ "hex": "#1A2B3C" }` / `{ "rgba": { "r": 26, "g": 43, "b": 60, "a": 1 } }`. Stored rebuilt in the full picker shape. |
+| `EntryPageBackgroundInnerColor` | String \| Object | Color of the block that wraps the form — rendered when `EntryPageBackgroundScope` is `"custom"`. Hex string (`"#1A2B3C"`, `"#1A2B3C80"`) or object `{ "hexa": "#1A2B3CFF" }` / `{ "hex": "#1A2B3C" }` / `{ "rgba": { "r": 26, "g": 43, "b": 60, "a": 1 } }`. Stored rebuilt in the full picker shape. |
+| `EntryPageBackgroundScope` | String | Where the background color applies: `"outside"` (default — the color fills the page around the form, the form block stays white), `"full"` (the whole page including the form block — ideal to embed on a dark website), `"custom"` (the form block uses `EntryPageBackgroundInnerColor`). On a dark block the text and fields of the form turn light automatically. |
 | `EntryPageMarginTop` | Number |  |
 | `EntryPageMarginBottom` | Number |  |
 | `EntryPageRadius` | Number |  |
-| `EntryPageTextColor` | Object | `{ "hexa": "#000" }` |
-| `EntryPageButtonColor` | Object | `{ "hexa": "#0275d8" }` |
+| `EntryPageTextColor` | String \| Object | Hex string (`"#1A2B3C"`, `"#1A2B3C80"`) or object `{ "hexa": "#1A2B3CFF" }` / `{ "hex": "#1A2B3C" }` / `{ "rgba": { "r": 26, "g": 43, "b": 60, "a": 1 } }`. Stored rebuilt in the full picker shape. |
+| `EntryPageButtonColor` | String \| Object | Hex string (`"#1A2B3C"`, `"#1A2B3C80"`) or object `{ "hexa": "#1A2B3CFF" }` / `{ "hex": "#1A2B3C" }` / `{ "rgba": { "r": 26, "g": 43, "b": 60, "a": 1 } }`. Stored rebuilt in the full picker shape. |
 | `EntryPageShowOverlay` | Boolean |  |
 | `BonusEntriesSwitch` | Boolean |  |
 | `BonusEntriesValue` | Number |  |
@@ -59,8 +60,8 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `AgeGateHeadline` | String |  |
 | `AgeGateDescription` | String |  |
 | `AgeGateMinAge` | Number (1\|2\|3) | **A CODE, NOT AN AGE IN YEARS.** `1` = 13 years or older, `2` = 18 years or older, `3` = 21 years or older. The platform default is `3` (21+). Any other value is rejected with a `400`. |
-| `AgeGateBackgroundColor` | Object | `{ "hex": "#FFF" }` |
-| `AgeGateTextColor` | Object | `{ "hex": "#000" }` |
+| `AgeGateBackgroundColor` | String \| Object | Hex string (`"#1A2B3C"`, `"#1A2B3C80"`) or object `{ "hexa": "#1A2B3CFF" }` / `{ "hex": "#1A2B3C" }` / `{ "rgba": { "r": 26, "g": 43, "b": 60, "a": 1 } }`. Stored rebuilt in the full picker shape. |
+| `AgeGateTextColor` | String \| Object | Hex string (`"#1A2B3C"`, `"#1A2B3C80"`) or object `{ "hexa": "#1A2B3CFF" }` / `{ "hex": "#1A2B3C" }` / `{ "rgba": { "r": 26, "g": 43, "b": 60, "a": 1 } }`. Stored rebuilt in the full picker shape. |
 | `ActivateAmoeSwitch` | Boolean |  |
 | `AmoeHeadline` | String |  |
 | `AmoeDescription` | String |  |
@@ -202,6 +203,11 @@ print(response.json())
 ```json
 {
   "Response": true,
+  "Telemetry": {
+    "DataConsumed": 0,
+    "APICalls": 42,
+    "MaxAPICalls": 10000
+  },
   "Message": "Entry Page Settings Updated Successfully",
   "UpdatedFields": ["EntryPageHeadline", "BonusEntriesSwitch", "BonusEntriesValue"],
   "SweepstakesToken": "uuid-v4-string"
@@ -316,7 +322,9 @@ print(response.json())
 - **Ownership Verification:** The entry page must exist and belong to the authenticated user.
 - **Type Validation:** Every value is strictly validated against its expected type before being saved.
 - **Measure Field:** `EntryPageWidthMeasure` only accepts `"%"` or `"px"`.
-- **Color Fields:** Must be objects — `{ "hexa": "#FFF" }` for most, `{ "hex": "#FFF" }` for AgeGate colors.
+- **Color Fields:** A hex string or an object with a valid `hexa`, `hex` or `rgba` value. Anything that is not a real color is rejected with `400`; accepted colors are stored rebuilt as `{ alpha, hex, hexa, hsla, hsva, hue, rgba }`.
+- **Background Scope:** `EntryPageBackgroundScope` accepts only `"outside"`, `"full"` or `"custom"`. Entry pages without it render as `"outside"`.
+- **Help:** Every `400` validation error carries a `Help.ExpectedBody` object listing every accepted field and its format.
 - **UUID Fields:** `SelectedOfficialRules` must be a valid UUID v4 (token of an existing rules document).
 - **URL Fields:** Sponsor profile fields accept a URL string or `null`.
 - **Max 5 Fields:** Requests with more than 5 fields will be rejected.

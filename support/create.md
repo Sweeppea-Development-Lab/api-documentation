@@ -30,7 +30,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `Title` | String | Yes | Ticket subject/title (max 200 characters) |
 | `Description` | String | Yes | Detailed description of the issue (max 20,000 characters) |
 | `Priority` | Number | Yes | Priority level: `1` (Low), `2` (Medium), `3` (High) |
-| `Platform` | String | No | Platform the ticket is about. One of: `general`, `renaissance`, `overture`, `winners`, `soprano`, `symphony`, `sonata`, `papyrus`, `website`, `blog`, `enewsletter`, `socialmedia`, `api`, `aws`, `shopify`, `instakes`, `mcp-server`, `sweeppea-cli`, `n8n`, `other`. Case-insensitive. Defaults to `general`. |
+| `Platform` | String | No | Platform the ticket is about. One of: `general`, `renaissance`, `overture`, `winners`, `soprano`, `symphony`, `sonata`, `papyrus`, `website`, `blog`, `enewsletter`, `socialmedia`, `api`, `aws`, `shopify`, `instakes`, `mcp-server`, `sweeppea-cli`, `n8n`, `other`. Case-insensitive; common spellings (`Shopify App`, `mcp`, `cli`, `Command Line Interface (CLI)`) are aliased. Defaults to `general`. |
 | `AssignTo` | String | No | Email, full name or username of the admin user to assign this ticket to exclusively. If omitted, the ticket is assigned to all admins. See the resolution order above. |
 
 ## Code Examples
