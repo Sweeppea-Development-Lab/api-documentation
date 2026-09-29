@@ -111,6 +111,24 @@ Three clients, one platform, one API key — all of them talk to this same REST 
 | [calendar/update](calendar/update.md) | POST | Update a calendar event |
 | [calendar/delete](calendar/delete.md) | POST | Delete a calendar event |
 
+### Codes & Coupons
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| [codes/stats](codes/stats.md) | POST | Count the codes of a sweepstakes: total, assigned, unassigned, redeemed, voided and available |
+| [codes/fetch](codes/fetch.md) | POST | One page of a sweepstakes' codes, filtered, searched and sorted on the server, with the participant each code is assigned to |
+| [codes/single](codes/single.md) | POST | Fetch one code by its CouponToken, or by the code itself within a sweepstakes (what a point-of-sale system has in hand) |
+| [codes/create](codes/create.md) | POST | Add 1 to 1,000 codes you already have (from a POS, a CRM or a printed batch) to a sweepstakes, with shared attributes |
+| [codes/generate](codes/generate.md) | POST | Generate 1 to 5,000 unique random codes in a sweepstakes, with a chosen length, character set, case, prefix and suffix |
+| [codes/update](codes/update.md) | POST | Change the attributes of one code |
+| [codes/delete](codes/delete.md) | POST | Delete 1 to 1,000 codes that nobody holds yet |
+| [codes/assign](codes/assign.md) | POST | Assign one available code to one named participant (regular or AMOE) of the same sweepstakes who holds no code yet |
+| [codes/unassign](codes/unassign.md) | POST | Take a code back from its participant and make it available again; any redemption is cleared with it |
+| [codes/redeem](codes/redeem.md) | POST | Mark one code as redeemed — exactly once — by its token or by the code a customer presented (point of sale) |
+| [codes/unredeem](codes/unredeem.md) | POST | Reverse a redemption made by mistake |
+| [codes/settings](codes/settings.md) | POST | Read how a sweepstakes hands out codes on its entry and AMOE pages and what participants are shown and sent |
+| [codes/update-settings](codes/update-settings.md) | POST | Change how a sweepstakes hands out codes |
+| [codes/send](codes/send.md) | POST | Queue an assigned code to the participant who holds it, by email, SMS or both, through the Messaging Engine |
+
 ### Entry Page
 | Endpoint | Method | Description |
 |----------|--------|-------------|
@@ -141,6 +159,22 @@ Three clients, one platform, one API key — all of them talk to this same REST 
 | [invoices/single](invoices/single.md) | POST | Fetch one invoice with public link, QR and timeline |
 | [invoices/update](invoices/update.md) | POST | Edit, publish or cancel an invoice |
 | [invoices/delete](invoices/delete.md) | POST | Delete an invoice and its event trail |
+
+### Messaging
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| [messaging/usage](messaging/usage.md) | POST | Read the account's messaging state: module access, plan channels, this month's email and SMS allowance, SMS sender readiness and any active sending pause |
+| [messaging/campaigns](messaging/campaigns.md) | POST | List the account's email and SMS campaigns, newest first, with filters and pagination |
+| [messaging/campaign](messaging/campaign.md) | POST | Fetch one campaign in full: content, audience, sender profile, counters and the actions this API may take on it |
+| [messaging/campaign-report](messaging/campaign-report.md) | POST | Delivery report of one campaign: counters, rates over sent, messages by status, top error codes, sends per hour and most-clicked links |
+| [messaging/campaign-recipients](messaging/campaign-recipients.md) | POST | List who a campaign went to and what happened to each message, paginated, with a status filter and an exact-address search |
+| [messaging/pause-campaign](messaging/pause-campaign.md) | POST | Stop a campaign that is queued or sending |
+| [messaging/resume-campaign](messaging/resume-campaign.md) | POST | Resume a paused campaign whose recipient list is complete |
+| [messaging/cancel-campaign](messaging/cancel-campaign.md) | POST | Cancel a campaign that has not finished and release the monthly allowance it was holding |
+| [messaging/suppressions](messaging/suppressions.md) | POST | List the account's do-not-contact list: every address that unsubscribed, replied STOP, complained, bounced or was added by you |
+| [messaging/add-suppressions](messaging/add-suppressions.md) | POST | Add up to 500 addresses of one channel to the account's do-not-contact list |
+| [messaging/remove-suppression](messaging/remove-suppression.md) | POST | Remove one address that was added to the do-not-contact list by hand (reason manual) |
+| [messaging/send](messaging/send.md) | POST | Queue one email and/or SMS written by you to one of your own participants |
 
 ### Notes
 | Endpoint | Method | Description |
