@@ -22,8 +22,20 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `SurveyName` | String | No | New name, up to 200 characters. Cannot be emptied |
 | `Status` | Boolean | No | `true` enables the survey, `false` disables it |
 | `Archived` | Boolean | No | `true` archives the survey, `false` restores it |
-| `Settings` | Object | No | Optional survey settings. Accepted keys: `Description`, `QuestionsPerPage` (1-5), `CollectContactInfo`, `ShowProgressBar`, `ShuffleQuestions`, `AllowMultipleResponses`, `ThankYouMessage`, `RedirectUrl`, `StartDate`, `EndDate`, `MaxResponses`, `ShowCountdown`, `EnableSharing`, `Language` (`en` or `es`). Visual keys (`Visuals`, `Pages`, `LogoFile`) are managed in the app and ignored here |
-| `Questions` | Array | No | **Full replacement** of the question set — each item accepts `Page`, `QuestionText` (required), `QuestionDescription`, `FieldType` (required, one of `text`, `textarea`, `radio`, `checkbox`, `select`, `slider`, `rating`, `nps`, `yesno` or `date`), `Layout`, `Required`, `Options[]` and `Settings{}`. Rejected with `409` when the survey already has responses |
+| `Settings` | Object | No | Optional survey settings. `Description` and `ThankYouMessage` (text, max 2000), `QuestionsPerPage` (whole number 1-5), `CollectContactInfo`, `ShowProgressBar`, `ShuffleQuestions`, `AllowMultipleResponses`, `ShowCountdown`, `EnableSharing` (`true`/`false`; `EnableSharing` requires a plan with survey sharing), `RedirectUrl` (an `https://` address, `""` removes it), `StartDate` / `EndDate` (ISO 8601 such as `2026-10-01T09:00:00`, `null` removes it, `EndDate` must be later), `MaxResponses` (whole number, `0` = no limit), `Language` (`en` or `es`) and `Visuals` (see below). Files (`LogoFile`, `Visuals.BackgroundImageFile`, page media) are uploaded in the app: when sent they are not written and are listed in `Data.IgnoredSettings` |
+| `Questions` | Array | No | **Full replacement** of the question set — each item accepts `Page`, `QuestionText` (required), `QuestionDescription`, `FieldType` (required, one of `text`, `textarea`, `radio`, `checkbox`, `select`, `slider`, `rating`, `nps`, `yesno` or `date`), `Layout`, `Required`, `Options[]` and `Settings{}`. Choice questions (`radio`, `checkbox`, `select`) need **2 to 30** distinct `Options` (a string or `{ Label, Value }`); other types take none. `slider` needs `MinValue` lower than `MaxValue`; `checkbox` selection limits cannot exceed its choices. Rejected with `409` when the survey already has responses |
+
+### The look — `Settings.Visuals`
+
+| Key | Accepted values |
+|-----|-----------------|
+| `PrimaryColor`, `BackgroundColor`, `CardColor`, `TextColor`, `ButtonColor`, `ButtonTextColor` | Hex color: `#RRGGBB` or `#RRGGBBAA` |
+| `FontFamily` | `Roboto`, `Arial`, `Georgia`, `Montserrat`, `Poppins`, `Courier New` |
+| `ButtonStyle` | `rounded`, `square`, `pill` |
+| `TransitionStyle` | `book`, `slide`, `fade` |
+| `DarkMode` | `true` / `false` |
+
+Send only the keys you want to change — on an update each one is written on its own, so the rest of the look (and the background image uploaded in the app) stays as it is. The logo and the background image are files and can only be uploaded from the app.
 
 ## Request Example
 
@@ -205,7 +217,8 @@ print(response.json())
       "Settings.QuestionsPerPage",
       "Settings.ThankYouMessage"
     ],
-    "QuestionsReplaced": true
+    "QuestionsReplaced": true,
+    "IgnoredSettings": []
   },
   "Message": "Survey Updated Successfully"
 }
@@ -291,7 +304,9 @@ print(response.json())
 ## Notes
 
 - At least one of `SurveyName`, `Status`, `Archived`, `Settings` or `Questions` must be present, otherwise the call returns `400` instead of reporting a silent no-op.
-- Settings are written key by key in dot notation (`Settings.Description`, `Settings.MaxResponses`, …), so the uploaded file objects and the visual styling are never clobbered by a partial payload.
+- Settings are written key by key in dot notation (`Settings.Description`, `Settings.Visuals.PrimaryColor`, …), so the uploaded file objects and the rest of the look are never clobbered by a partial payload.
+- **Refused, never rewritten.** A value out of range — a choice question without 2-30 options, `QuestionsPerPage: 0`, a text over its limit, a `"true"` string where a boolean is expected, a non-`https` `RedirectUrl`, an `EndDate` before `StartDate` — returns `400` naming the field and the rule, and nothing is written. Earlier versions of this endpoint silently truncated or reset such values.
+- A call whose only content is a key the API does not write (e.g. `Settings.LogoFile`) returns `400` naming it, instead of reporting a no-op success.
 - `UpdatedFields` lists exactly what was written. The survey is **read back from the database** after the writes, so the response is the real stored state and not an echo of the request.
 - Lowering `QuestionsPerPage` below the current layout is refused with `400` — send a new `Questions` array in the same call to re-lay out the survey.
 - Replacing the questions renumbers pages `1..N` with no gaps and reassigns `Order` per page, exactly like `POST /surveys/create`.

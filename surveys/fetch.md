@@ -191,7 +191,7 @@ print(response.json())
 - Every filter is optional — an empty body returns the whole account, 50 rows at a time.
 - Results are always scoped to the account that owns the API token. Another account's surveys are never visible.
 - `PagesCount` is the highest page actually holding a question, not the number of pages configured.
-- `Settings` never carries the base64 buffer of an uploaded file, and `Visuals` is omitted entirely — styling lives in the app.
+- `Settings` never carries the base64 buffer of an uploaded file. `Visuals` (the look of the public form) is included, so what you set through `/surveys/create` or `/surveys/update` can be read back.
 - `PublicLink` is the HUB address the participant answers on: `https://hub.sweeppea.com/s?tkn={SurveyToken}`.
 - For one survey **with its questions**, use `POST /surveys/single`.
 - **🔒 Module Access:** The Surveys module is disabled by default. An administrator must enable it for your account before any of these endpoints will respond.

@@ -21,8 +21,20 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `SweepstakesToken` | String | Yes | UUID v4 of the sweepstakes the survey belongs to |
 | `SurveyName` | String | Yes | Survey name, up to 200 characters |
 | `Status` | Boolean | No | `false` creates the survey disabled (default: `true`) |
-| `Settings` | Object | No | Optional survey settings. Accepted keys: `Description`, `QuestionsPerPage` (1-5), `CollectContactInfo`, `ShowProgressBar`, `ShuffleQuestions`, `AllowMultipleResponses`, `ThankYouMessage`, `RedirectUrl`, `StartDate`, `EndDate`, `MaxResponses`, `ShowCountdown`, `EnableSharing`, `Language` (`en` or `es`). Visual keys (`Visuals`, `Pages`, `LogoFile`) are managed in the app and ignored here |
-| `Questions` | Array | No | The question set. Each item accepts `Page`, `QuestionText` (required), `QuestionDescription`, `FieldType` (required, one of `text`, `textarea`, `radio`, `checkbox`, `select`, `slider`, `rating`, `nps`, `yesno` or `date`), `Layout`, `Required`, `Options[]` and `Settings{}`. Omit or send `[]` to create an empty survey |
+| `Settings` | Object | No | Optional survey settings. `Description` and `ThankYouMessage` (text, max 2000), `QuestionsPerPage` (whole number 1-5), `CollectContactInfo`, `ShowProgressBar`, `ShuffleQuestions`, `AllowMultipleResponses`, `ShowCountdown`, `EnableSharing` (`true`/`false`; `EnableSharing` requires a plan with survey sharing), `RedirectUrl` (an `https://` address, `""` removes it), `StartDate` / `EndDate` (ISO 8601 such as `2026-10-01T09:00:00`, `null` removes it, `EndDate` must be later), `MaxResponses` (whole number, `0` = no limit), `Language` (`en` or `es`) and `Visuals` (see below). Files (`LogoFile`, `Visuals.BackgroundImageFile`, page media) are uploaded in the app: when sent they are not written and are listed in `Data.IgnoredSettings` |
+| `Questions` | Array | No | The question set. Each item accepts `Page`, `QuestionText` (required), `QuestionDescription`, `FieldType` (required, one of `text`, `textarea`, `radio`, `checkbox`, `select`, `slider`, `rating`, `nps`, `yesno` or `date`), `Layout`, `Required`, `Options[]` and `Settings{}`. Omit or send `[]` to create an empty survey. Choice questions (`radio`, `checkbox`, `select`) need **2 to 30** distinct `Options` (a string or `{ Label, Value }`); other types take none. `slider` needs `MinValue` lower than `MaxValue`; `checkbox` selection limits cannot exceed its choices. |
+
+### The look — `Settings.Visuals`
+
+| Key | Accepted values |
+|-----|-----------------|
+| `PrimaryColor`, `BackgroundColor`, `CardColor`, `TextColor`, `ButtonColor`, `ButtonTextColor` | Hex color: `#RRGGBB` or `#RRGGBBAA` |
+| `FontFamily` | `Roboto`, `Arial`, `Georgia`, `Montserrat`, `Poppins`, `Courier New` |
+| `ButtonStyle` | `rounded`, `square`, `pill` |
+| `TransitionStyle` | `book`, `slide`, `fade` |
+| `DarkMode` | `true` / `false` |
+
+Send only the keys you want to change — on an update each one is written on its own, so the rest of the look (and the background image uploaded in the app) stays as it is. The logo and the background image are files and can only be uploaded from the app.
 
 ## Request Example
 
@@ -252,7 +264,8 @@ print(response.json())
     },
     "PublicLink": "https://hub.sweeppea.com/s?tkn=uuid-v4-string",
     "Status": true,
-    "Archived": false
+    "Archived": false,
+    "IgnoredSettings": []
   },
   "Message": "Survey Created Successfully"
 }
@@ -281,7 +294,7 @@ print(response.json())
 ```json
 {
   "Response": false,
-  "Message": "Question at position 2 is invalid. QuestionText is required and FieldType must be one of: text, textarea, radio, checkbox, select, slider, rating, nps, yesno, date.",
+  "Message": "Question 2: a radio question needs at least 2 options (it has 0). A participant could not answer it.",
   "Code": 400
 }
 ```
@@ -352,7 +365,8 @@ print(response.json())
 - The pages you send are grouping keys. They are renumbered `1..N` with no gaps, and `Order` is assigned from the position inside the array.
 - Nothing is written unless every question validates — DocumentDB gives no multi-document transaction to roll back with.
 - The survey token and every question token are minted in a **single batch**, so creating a 25-question survey costs two round trips instead of 25 collection scans.
-- Visual settings (`Visuals`, `Pages`, `LogoFile`) are silently ignored — they are uploaded and styled in the app, and accepting them here would let an integration clobber an uploaded file object.
+- `Settings.Visuals` sets the look of the public form (colors, font, buttons, transition, dark mode). Files — the logo, the background image and page media — are uploaded in the app only; when sent here they are not written and are listed in `Data.IgnoredSettings`, never silently dropped.
+- **Refused, never rewritten.** A value out of range — a choice question without 2-30 options, `QuestionsPerPage: 0`, a text over its limit, a `"true"` string where a boolean is expected, a non-`https` `RedirectUrl`, an `EndDate` before `StartDate` — returns `400` naming the field and the rule, and nothing is written. Earlier versions of this endpoint silently truncated or reset such values.
 - The survey is created **enabled** unless `Status: false` is sent, and always unarchived.
 - To change the question set afterwards use `POST /surveys/update` — but only while the survey has no responses.
 - **🔒 Module Access:** The Surveys module is disabled by default. An administrator must enable it for your account before any of these endpoints will respond.
