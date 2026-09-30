@@ -8,7 +8,7 @@ Retrieve the full aggregated report of a survey — funnel, completion metrics, 
 
 ## Description
 
-This endpoint returns the same payload the Reports screen draws its charts from: the visit → start → complete funnel, the completion rate and times, the device and browser breakdowns, a daily timeline and the answer distribution of every question. Array answers are unwound twice, so every selected checkbox counts on its own instead of the whole selection counting as one opaque bucket. Distributions are capped at 25 buckets per question — the long tail still counts towards `TotalAnswers`, it just does not travel, and `Truncated` says when that happened. A survey with no traffic returns a fully shaped report of zeros, never an error.
+This endpoint returns the same payload the Reports screen draws its charts from: the visit → start → complete funnel, the completion rate and times, the device and browser breakdowns, a daily timeline and the answer distribution of every question. Array answers are unwound twice, so every selected checkbox counts on its own instead of the whole selection counting as one opaque bucket. Every preset value is listed in its own order with its count — **zeros included**, so an option nobody picked is still on the chart — and `Respondents` (the people who answered) travels next to `TotalSelections` (a checkbox counts every tick). Written-in "Other" answers follow, most frequent first with a stable tie-breaker, up to 25; the rest is summarised in `OtherHidden` and `Truncated` says when that happened. A survey with no traffic returns a fully shaped report of zeros, never an error.
 
 ## Authentication
 
@@ -163,14 +163,27 @@ print(response.json())
           "Distribution": [
             {
               "Answer": "Friend",
-              "Count": 140
+              "Count": 140,
+              "Kind": "value"
             },
             {
               "Answer": "Social media",
-              "Count": 128
+              "Count": 128,
+              "Kind": "value"
+            },
+            {
+              "Answer": "Newspaper",
+              "Count": 0,
+              "Kind": "value"
             }
           ],
           "TotalAnswers": 268,
+          "Respondents": 268,
+          "TotalSelections": 268,
+          "OtherHidden": {
+            "Answers": 0,
+            "Count": 0
+          },
           "Truncated": false
         }
       ]
@@ -255,7 +268,8 @@ print(response.json())
 - `TotalResponses` counts every stored response including the abandoned ones; `CompletedResponses` and `AbandonedResponses` split them by the completion flag.
 - `Devices` and `Browsers` are counted from `visit` events only. `Unknown` groups the visits that reported nothing.
 - `Timeline` has one row per day **and** event type, ascending. Days with no activity are absent.
-- `Distribution` lists the answer buckets most frequent first, capped at 25 per question. `TotalAnswers` is the real total including the buckets that did not travel.
+- `Distribution` lists the question's own values first, in their order and **including zeros**: the options of a choice question, `Yes`/`No`, every score of a rating (1 to `RatingMax`) or NPS scale. `Kind` is `value` for those (and a slider's values, ascending) and `other` for written-in "Other" answers, which follow most frequent first (ties by text) up to 25; `OtherHidden` counts the rest.
+- `Respondents` is the number of people who answered the question — the denominator of a share. `TotalSelections` (and `TotalAnswers`, kept for compatibility) is the sum of the buckets: on a `checkbox` it counts every tick, so it can exceed `Respondents`.
 - `AIInsights` carries the last insights generated from the app, when any. The API never triggers the model itself.
 - All aggregations run in parallel rather than inside a `$facet` — DocumentDB does not support it.
 - For the raw answers behind these numbers use `POST /surveys/responses`.

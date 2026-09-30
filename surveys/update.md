@@ -23,7 +23,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `Status` | Boolean | No | `true` enables the survey, `false` disables it |
 | `Archived` | Boolean | No | `true` archives the survey, `false` restores it |
 | `Settings` | Object | No | Optional survey settings. `Description` and `ThankYouMessage` (text, max 2000), `QuestionsPerPage` (whole number 1-5), `CollectContactInfo`, `ShowProgressBar`, `ShuffleQuestions`, `AllowMultipleResponses`, `ShowCountdown`, `EnableSharing` (`true`/`false`; `EnableSharing` requires a plan with survey sharing), `RedirectUrl` (an `https://` address, `""` removes it), `StartDate` / `EndDate` (ISO 8601 such as `2026-10-01T09:00:00`, `null` removes it, `EndDate` must be later), `MaxResponses` (whole number, `0` = no limit), `Language` (`en` or `es`) and `Visuals` (see below). Files (`LogoFile`, `Visuals.BackgroundImageFile`, page media) are uploaded in the app: when sent they are not written and are listed in `Data.IgnoredSettings` |
-| `Questions` | Array | No | **Full replacement** of the question set — each item accepts `Page`, `QuestionText` (required), `QuestionDescription`, `FieldType` (required, one of `text`, `textarea`, `radio`, `checkbox`, `select`, `slider`, `rating`, `nps`, `yesno` or `date`), `Layout`, `Required`, `Options[]` and `Settings{}`. Choice questions (`radio`, `checkbox`, `select`) need **2 to 30** distinct `Options` (a string or `{ Label, Value }`); other types take none. `slider` needs `MinValue` lower than `MaxValue`; `checkbox` selection limits cannot exceed its choices. Rejected with `409` when the survey already has responses |
+| `Questions` | Array | No | **Full replacement** of the question set — each item accepts `Page`, `QuestionText` (required), `QuestionDescription`, `FieldType` (required, one of `text`, `textarea`, `radio`, `checkbox`, `select`, `slider`, `rating`, `nps`, `yesno` or `date`), `Layout`, `Required`, `Options[]` and `Settings{}`. Choice questions (`radio`, `checkbox`, `select`) need **2 to 30** distinct `Options` (a string or `{ Label, Value }`); other types take none. `slider` needs `MinValue` lower than `MaxValue`; `checkbox` selection limits cannot exceed its choices. A `text` question with `DataType: "number"` takes an optional `NumberMin` / `NumberMax`, and a `date` question an optional `MinDate` / `MaxDate` (`YYYY-MM-DD`); both are enforced on the public form and when a response is submitted. Rejected with `409` when the survey already has responses |
 
 ### The look — `Settings.Visuals`
 
@@ -210,6 +210,11 @@ print(response.json())
       "LogoFile": null
     },
     "PublicLink": "https://hub.sweeppea.com/s?tkn=uuid-v4-string",
+    "Availability": {
+      "Live": true,
+      "Reasons": [],
+      "Message": "The public link is live."
+    },
     "Archived": false,
     "Status": true,
     "UpdatedFields": [
@@ -220,7 +225,7 @@ print(response.json())
     "QuestionsReplaced": true,
     "IgnoredSettings": []
   },
-  "Message": "Survey Updated Successfully"
+  "Message": "Survey Updated Successfully. The public link is live."
 }
 ```
 
@@ -303,6 +308,7 @@ print(response.json())
 
 ## Notes
 
+- `Data.Availability` says whether the public link works right now: `Live`, and when it does not, the `Reasons` — `Disabled`, `Archived`, `PlanDoesNotAllowSharing`, `NoQuestions`, `NotStarted`, `Ended`, `MaxResponsesReached`. Check `Live` before sharing the link. The same sentence is appended to `Message`.
 - At least one of `SurveyName`, `Status`, `Archived`, `Settings` or `Questions` must be present, otherwise the call returns `400` instead of reporting a silent no-op.
 - Settings are written key by key in dot notation (`Settings.Description`, `Settings.Visuals.PrimaryColor`, …), so the uploaded file objects and the rest of the look are never clobbered by a partial payload.
 - **Refused, never rewritten.** A value out of range — a choice question without 2-30 options, `QuestionsPerPage: 0`, a text over its limit, a `"true"` string where a boolean is expected, a non-`https` `RedirectUrl`, an `EndDate` before `StartDate` — returns `400` naming the field and the rule, and nothing is written. Earlier versions of this endpoint silently truncated or reset such values.

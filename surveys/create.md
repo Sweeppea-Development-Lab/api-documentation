@@ -22,7 +22,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | `SurveyName` | String | Yes | Survey name, up to 200 characters |
 | `Status` | Boolean | No | `false` creates the survey disabled (default: `true`) |
 | `Settings` | Object | No | Optional survey settings. `Description` and `ThankYouMessage` (text, max 2000), `QuestionsPerPage` (whole number 1-5), `CollectContactInfo`, `ShowProgressBar`, `ShuffleQuestions`, `AllowMultipleResponses`, `ShowCountdown`, `EnableSharing` (`true`/`false`; `EnableSharing` requires a plan with survey sharing), `RedirectUrl` (an `https://` address, `""` removes it), `StartDate` / `EndDate` (ISO 8601 such as `2026-10-01T09:00:00`, `null` removes it, `EndDate` must be later), `MaxResponses` (whole number, `0` = no limit), `Language` (`en` or `es`) and `Visuals` (see below). Files (`LogoFile`, `Visuals.BackgroundImageFile`, page media) are uploaded in the app: when sent they are not written and are listed in `Data.IgnoredSettings` |
-| `Questions` | Array | No | The question set. Each item accepts `Page`, `QuestionText` (required), `QuestionDescription`, `FieldType` (required, one of `text`, `textarea`, `radio`, `checkbox`, `select`, `slider`, `rating`, `nps`, `yesno` or `date`), `Layout`, `Required`, `Options[]` and `Settings{}`. Omit or send `[]` to create an empty survey. Choice questions (`radio`, `checkbox`, `select`) need **2 to 30** distinct `Options` (a string or `{ Label, Value }`); other types take none. `slider` needs `MinValue` lower than `MaxValue`; `checkbox` selection limits cannot exceed its choices. |
+| `Questions` | Array | No | The question set. Each item accepts `Page`, `QuestionText` (required), `QuestionDescription`, `FieldType` (required, one of `text`, `textarea`, `radio`, `checkbox`, `select`, `slider`, `rating`, `nps`, `yesno` or `date`), `Layout`, `Required`, `Options[]` and `Settings{}`. Omit or send `[]` to create an empty survey. Choice questions (`radio`, `checkbox`, `select`) need **2 to 30** distinct `Options` (a string or `{ Label, Value }`); other types take none. `slider` needs `MinValue` lower than `MaxValue`; `checkbox` selection limits cannot exceed its choices. A `text` question with `DataType: "number"` takes an optional `NumberMin` / `NumberMax`, and a `date` question an optional `MinDate` / `MaxDate` (`YYYY-MM-DD`); both are enforced on the public form and when a response is submitted. |
 
 ### The look — `Settings.Visuals`
 
@@ -263,11 +263,16 @@ print(response.json())
       "LogoFile": null
     },
     "PublicLink": "https://hub.sweeppea.com/s?tkn=uuid-v4-string",
+    "Availability": {
+      "Live": true,
+      "Reasons": [],
+      "Message": "The public link is live."
+    },
     "Status": true,
     "Archived": false,
     "IgnoredSettings": []
   },
-  "Message": "Survey Created Successfully"
+  "Message": "Survey Created Successfully. The public link is live."
 }
 ```
 
@@ -365,6 +370,7 @@ print(response.json())
 - The pages you send are grouping keys. They are renumbered `1..N` with no gaps, and `Order` is assigned from the position inside the array.
 - Nothing is written unless every question validates — DocumentDB gives no multi-document transaction to roll back with.
 - The survey token and every question token are minted in a **single batch**, so creating a 25-question survey costs two round trips instead of 25 collection scans.
+- `Data.Availability` says whether the public link works right now: `Live`, and when it does not, the `Reasons` — `Disabled`, `Archived`, `PlanDoesNotAllowSharing`, `NoQuestions`, `NotStarted`, `Ended`, `MaxResponsesReached`. A survey with no questions shows "Survey Not Available" to visitors; check `Live` before sharing the link. The same sentence is appended to `Message`.
 - `Settings.Visuals` sets the look of the public form (colors, font, buttons, transition, dark mode). Files — the logo, the background image and page media — are uploaded in the app only; when sent here they are not written and are listed in `Data.IgnoredSettings`, never silently dropped.
 - **Refused, never rewritten.** A value out of range — a choice question without 2-30 options, `QuestionsPerPage: 0`, a text over its limit, a `"true"` string where a boolean is expected, a non-`https` `RedirectUrl`, an `EndDate` before `StartDate` — returns `400` naming the field and the rule, and nothing is written. Earlier versions of this endpoint silently truncated or reset such values.
 - The survey is created **enabled** unless `Status: false` is sent, and always unarchived.

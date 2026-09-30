@@ -107,6 +107,11 @@ print(response.json())
         "LogoFile": null
       },
       "PublicLink": "https://hub.sweeppea.com/s?tkn=uuid-v4-string",
+      "Availability": {
+        "Live": true,
+        "Reasons": [],
+        "Message": "The public link is live."
+      },
       "Archived": false,
       "Status": true
     },
@@ -221,6 +226,7 @@ print(response.json())
 ## Notes
 
 - Ownership is part of the lookup, so another account's survey reads exactly like a survey that does not exist — `404`, never `403`.
+- `Data.Availability` says whether the public link works right now: `Live`, and when it does not, the `Reasons` — `Disabled`, `Archived`, `PlanDoesNotAllowSharing`, `NoQuestions`, `NotStarted`, `Ended`, `MaxResponsesReached`. Check `Live` before sharing the link.
 - `IsLocked` is `true` when `ResponsesCount &gt; 0`. The question set can then no longer be replaced.
 - `Questions` is sorted by `Page` then `Order` and is an empty array for a survey with no questions yet.
 - The question set, the response counter and the parent sweepstakes name are fetched in one parallel round trip.
