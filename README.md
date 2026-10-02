@@ -175,6 +175,13 @@ Three clients, one platform, one API key — all of them talk to this same REST 
 | [messaging/add-suppressions](messaging/add-suppressions.md) | POST | Add up to 500 addresses of one channel to the account's do-not-contact list |
 | [messaging/remove-suppression](messaging/remove-suppression.md) | POST | Remove one address that was added to the do-not-contact list by hand (reason manual) |
 | [messaging/send](messaging/send.md) | POST | Queue one email and/or SMS written by you to one of your own participants |
+| [messaging/drips](messaging/drips.md) | POST | List the account's drip campaigns (automated email or SMS sequences) with people counters and the plan allowance |
+| [messaging/drip](messaging/drip.md) | POST | Fetch one drip in full: every step with its delay and content, the audience summary and the settings |
+| [messaging/drip-report](messaging/drip-report.md) | POST | Statistics of a drip: per step, in total, day by day and the most-clicked links |
+| [messaging/drip-enrollments](messaging/drip-enrollments.md) | POST | List the contacts in a drip, where each one is in the sequence and why anyone left |
+| [messaging/pause-drip](messaging/pause-drip.md) | POST | Pause an active drip and release the allowance its queued messages were holding |
+| [messaging/resume-drip](messaging/resume-drip.md) | POST | Resume a drip you paused and did not change since, after the same sending checks as the app |
+| [messaging/drip-remove-contact](messaging/drip-remove-contact.md) | POST | Take one contact out of a drip so it receives no more steps |
 
 ### Notes
 | Endpoint | Method | Description |
