@@ -184,7 +184,8 @@ print(response.json())
 
 ## Notes
 
-- Removed: the `surveys` document, every `surveysquestions`, `surveysresponses` and `surveysstats` row of that survey, and the S3 folder `{UserToken}/surveys/{SurveyToken}/`.
+- Removed: the `surveys` document, every `surveysquestions`, `surveysresponses` and `surveysstats` row of that survey, its website-embed counters (`surveys_embed_stats`), and the S3 folder `{UserToken}/surveys/{SurveyToken}/`.
+- Every entry page that offered this survey (entry page builder → Survey) loses that configuration entirely: the call to action disappears from the entry page and the thank-you page, and registrations continue normally without it.
 - Kept: the `participants` created from the survey — they belong to the sweepstakes — and the sweepstakes itself.
 - The survey document is deleted first. Once it is gone the survey can no longer be rendered or answered, so an error while cleaning up the children cannot leave a live survey pointing at deleted questions.
 - S3 cleanup is best effort: the prefix is listed page by page and each page is deleted in one batched call. An S3 hiccup is logged and never turns into a half-deleted survey.
