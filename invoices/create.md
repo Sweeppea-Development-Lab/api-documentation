@@ -228,11 +228,11 @@ print(response.json())
     "TaxRate": 8.5,
     "TaxAmount": 395.25,
     "AmountBeforeFees": 5045.25,
-    "SweeppeaFeeAmount": 161.02,
-    "MerchantFeeAmount": 161.02,
-    "FeeAmount": 322.04,
+    "SweeppeaFeeAmount": 151.36,
+    "MerchantFeeAmount": 151.36,
+    "FeeAmount": 302.72,
     "FeesChargedToRecipient": true,
-    "Total": 5367.29,
+    "Total": 5347.97,
     "PaymentMethod": "card",
     "ProcessingFeePercentage": 3,
     "MerchantFeePercentage": 3,
@@ -324,7 +324,7 @@ print(response.json())
 
 - **🔒 Module Access:** The Invoices module is disabled by default. An administrator must enable it for your account before any of these endpoints will respond
 - **💵 Money Is Recomputed:** `Subtotal`, `TaxAmount`, the fee breakdown and `Total` are always derived from `Items`, `DiscountAmount`, `TaxRate` and `PaymentMethod`. Values sent for them are ignored
-- **💳 Fees Are Paid By The Recipient, And Only On A Card:** a `card` invoice's `Total` **includes** the surcharge and you receive `AmountBeforeFees` in full. It is a gross-up, not an addition: `AmountBeforeFees / (1 − fee)`, because the fees are charged as a percentage of what is actually charged. **`check` and `transfer` carry no fee at all** — nothing reaches the processor. On `recipient`, `Total` is the base and `FeeAmount` is what the surcharge would be if the payer takes the card
+- **💳 Fees Are Paid By The Recipient, And Only On A Card:** a `card` invoice's `Total` **includes** the surcharge and you receive `AmountBeforeFees` in full. Each fee is exactly its percentage of `AmountBeforeFees` (rounded to the cent), so `Total = AmountBeforeFees + SweeppeaFeeAmount + MerchantFeeAmount` — a 4% fee costs exactly 4%. **`check` and `transfer` carry no fee at all** — nothing reaches the processor. On `recipient`, `Total` is the base and `FeeAmount` is what the surcharge would be if the payer takes the card
 - **🔢 Atomic Numbering:** Invoice numbers are reserved with an atomic per-account counter, so parallel create calls always receive distinct consecutive numbers
 - **🧊 Frozen Fees:** `ProcessingFeePercentage` and `MerchantFeePercentage` are copied from your plan at creation and never recalculated afterwards
 - **📧 No Email:** This endpoint never notifies the recipient. Take `PublicLink` and distribute it however you want

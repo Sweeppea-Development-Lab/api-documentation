@@ -8,7 +8,7 @@ Add up to 500 addresses of one channel to the account's do-not-contact list in o
 
 ## Description
 
-The usual caller is a CRM syncing its own opt-outs: people who opted out there must stay opted out in Sweeppea, or the first campaign contacts them again. Every address is normalized first (lowercased email, E.164 phone); anything that cannot be normalized is not stored and is returned in `Invalid` so you can fix it.
+The usual caller is a CRM syncing its own opt-outs: people who opted out there must stay opted out in Sweeppea, or the first campaign contacts them again. Every address is normalized first (lowercased email; phone as `+1XXXXXXXXXX`); anything that cannot be normalized is not stored and is returned in `Invalid` so you can fix it.
 
 The call is **idempotent**: sending the same batch twice adds nothing the second time. An address that is already suppressed keeps its original reason — an unsubscribe or a STOP is never downgraded to a removable `manual` row. New rows are stored with reason `manual` and apply to the whole account.
 
@@ -23,7 +23,7 @@ This endpoint requires Bearer token authentication via the `Authorization` heade
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `Channel` | String | Yes | `email` or `sms` |
-| `Addresses` | Array | Yes | 1 to 500 email addresses, or phone numbers (E.164 or 10-digit US/CA) |
+| `Addresses` | Array | Yes | 1 to 500 email addresses, or US/Canadian phone numbers (+1XXXXXXXXXX, 1XXXXXXXXXX or 10 digits) |
 
 ## Request Example
 
@@ -151,7 +151,7 @@ print(response.json())
   "Help": {
     "ExpectedBody": {
       "Channel": "string (required) — email | sms",
-      "Addresses": "array (required) — 1 to 500 email addresses or phone numbers (E.164 or 10-digit US/CA)",
+      "Addresses": "array (required) — 1 to 500 email addresses or US/Canadian phone numbers (+1XXXXXXXXXX, 1XXXXXXXXXX or 10 digits)",
       "CalledFromMCP": "boolean (optional) — Set by the MCP server, ignore it",
       "CalledFromCLI": "boolean (optional) — Set by the CLI, ignore it"
     }
@@ -169,7 +169,7 @@ print(response.json())
   "Help": {
     "ExpectedBody": {
       "Channel": "string (required) — email | sms",
-      "Addresses": "array (required) — 1 to 500 email addresses or phone numbers (E.164 or 10-digit US/CA)",
+      "Addresses": "array (required) — 1 to 500 email addresses or US/Canadian phone numbers (+1XXXXXXXXXX, 1XXXXXXXXXX or 10 digits)",
       "CalledFromMCP": "boolean (optional) — Set by the MCP server, ignore it",
       "CalledFromCLI": "boolean (optional) — Set by the CLI, ignore it"
     }

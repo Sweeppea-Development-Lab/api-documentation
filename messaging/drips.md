@@ -172,6 +172,7 @@ print(response.json())
 | `Page / ItemsPerPage / TotalPages` | number | Pagination. |
 | `PlanLimit.MaxAllowed` | number | Drips your plan allows (drafts and archived count). `0` = unlimited. |
 | `PlanLimit.CurrentCount` | number | Drips in your account. |
+| `PlanLimit.Unlimited` | boolean | `true` when your plan sets no drip limit (`MaxAllowed` is `0`). |
 | `PlanLimit.LimitReached` | boolean | `true` when no more drips can be created. |
 | `CanRun` | boolean | Whether your plan lets drips be activated or resumed. |
 

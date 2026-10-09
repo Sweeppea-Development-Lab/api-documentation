@@ -218,7 +218,7 @@ print(response.json())
 | `People` | object | Enrolled, active, completed, exited (by reason) and deferred contacts. |
 | `Totals` | object | Message counters summed over every step. |
 | `Rates` | object | Percentages over `Sent`, two decimals. |
-| `Steps[]` | array | Per step: `Index`, `Name`, `Delay`, `Waiting` (people waiting for it), `Counters` and `Rates`. |
+| `Steps[]` | array | Per step: `Index` (0-based, same as `Drip.Steps[].Index` in `/messaging/drip`), `Name`, `Delay`, `Waiting` (people waiting for it), `Counters` and `Rates`. |
 | `Timeline[]` | array | One entry per UTC day of the window: `Day`, `Sent`, `Opened`, `Clicked`, `Unsubscribed`. |
 | `TopLinks` | array|null | Up to 10 most-clicked links in the window with their 1-based `Step`. The unsubscribe link is excluded. `null` if the links could not be read. |
 
