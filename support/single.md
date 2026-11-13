@@ -10,6 +10,8 @@ Retrieve complete details of a single support ticket by CaseNumber.
 
 This endpoint retrieves complete details of a single support ticket by its CaseNumber. The ticket must belong to the authenticated user. Returns all ticket information including notes, files, collaborators, and statistics.
 
+Sweeppea-internal details are not returned: `Statistics[].UserToken` is only filled for your own actions (actions by Sweeppea Support show `null`) and `GitHubIssue` is always an empty object — `EngineeringInProgress` is `true` while our engineering team works on the ticket (Resolve Ticket answers `409` meanwhile). Automatic closing: when Sweeppea Support resolves a ticket it can keep it open for a few days before it closes by itself. While that is scheduled the ticket is still open and `AutoClose` says when it closes (`ClosesAt`, `Days`); otherwise `AutoClose` is `null`. Adding information to the ticket with Update Ticket cancels the automatic closing. `ClosedAutomatically` is `true` once a ticket closed by itself that way.
+
 ## Authentication
 
 This endpoint requires Bearer token authentication via the `Authorization` header.
@@ -120,11 +122,23 @@ print(response.json())
         "Date": "2025-01-26T10:00:00.000Z",
         "UserToken": "<user-token>",
         "Action": "create"
+      },
+      {
+        "Id": "<stat-id>",
+        "Date": "2025-01-27T09:00:00.000Z",
+        "UserToken": null,
+        "Action": "degrade"
       }
     ],
     "Status": false,
     "AttachmentInfo": {},
-    "GitHubIssue": {}
+    "GitHubIssue": {},
+    "EngineeringInProgress": false,
+    "AutoClose": {
+      "ClosesAt": "2025-02-01T09:00:00.000Z",
+      "Days": 5
+    },
+    "ClosedAutomatically": false
   },
   "Telemetry": {
     "DataConsumed": 0,

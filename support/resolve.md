@@ -10,6 +10,8 @@ Close an open support ticket for the authenticated user.
 
 This endpoint allows users to close their own open support tickets. The ticket must belong to the authenticated user and must be in open status (Status = false). When closed, the ticket's status is set to true, completion is set to 100%, and a closing note and resolve statistic are automatically added.
 
+A ticket Sweeppea Support already resolved with a scheduled automatic closing (see `AutoClose` in Open Tickets) can be closed right away with this endpoint; the scheduled closing simply ends. Two simultaneous calls close the ticket once — the second answers `404`.
+
 ## Authentication
 
 This endpoint requires Bearer token authentication via the `Authorization` header.
@@ -83,6 +85,11 @@ print(response.json())
     "Status": true,
     "CloseDate": "2026-01-26T12:05:35.534Z",
     "ClosedBy": "John Doe"
+  },
+  "Telemetry": {
+    "DataConsumed": 0,
+    "APICalls": 142,
+    "MaxAPICalls": 100000
   }
 }
 ```

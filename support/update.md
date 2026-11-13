@@ -10,6 +10,8 @@ Update an existing support ticket by modifying its title or description. Only op
 
 This endpoint allows updating an existing support ticket. You can modify the title and description. The ticket must be open (not closed) and must belong to the authenticated user. Each update action is tracked in the ticket's statistics.
 
+If Sweeppea Support had resolved the ticket with a scheduled automatic closing (`AutoClose` in Open Tickets), updating it means the issue is not solved yet: the automatic closing is cancelled, the ticket stays open for our team, and the response carries `AutoCloseCancelled: true`.
+
 ## Authentication
 
 This endpoint requires Bearer token authentication via the `Authorization` header.
@@ -93,6 +95,12 @@ print(response.json())
     "Description": "Users are unable to submit entries on both mobile and desktop versions",
     "Priority": 2,
     "Status": false
+  },
+  "AutoCloseCancelled": false,
+  "Telemetry": {
+    "DataConsumed": 0,
+    "APICalls": 142,
+    "MaxAPICalls": 100000
   }
 }
 ```

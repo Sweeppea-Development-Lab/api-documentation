@@ -10,6 +10,8 @@ Retrieve all open support tickets for the authenticated user.
 
 This endpoint retrieves all open support tickets associated with the authenticated user. Tickets are returned in descending order by creation date. Only tickets with Status = false (open) are included in the results. The Subject field is truncated to 100 characters maximum.
 
+Automatic closing: when Sweeppea Support resolves a ticket it can keep it open for a few days before it closes by itself. While that is scheduled the ticket is still open and `AutoClose` says when it closes (`ClosesAt`, `Days`); otherwise `AutoClose` is `null`. Adding information to the ticket with Update Ticket cancels the automatic closing.
+
 You can filter tickets by search term, platform (ResourceAffected), and priority level.
 
 ## Authentication
@@ -104,14 +106,19 @@ print(response.json())
         "Subject": "Issue with sweepstakes configuration (truncated to 100 chars max)",
         "Date": "2025-01-26T10:00:00.000Z",
         "Priority": 2,
-        "ResourceAffected": "renaissance"
+        "ResourceAffected": "renaissance",
+        "AutoClose": {
+          "ClosesAt": "2025-01-31T15:00:00.000Z",
+          "Days": 5
+        }
       },
       {
         "CaseNumber": "XYZ5678",
         "Subject": "API integration question",
         "Date": "2025-01-25T14:00:00.000Z",
         "Priority": 1,
-        "ResourceAffected": "api"
+        "ResourceAffected": "api",
+        "AutoClose": null
       }
     ]
   },
