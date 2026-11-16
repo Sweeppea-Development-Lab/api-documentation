@@ -51,6 +51,7 @@ When implementing your client, handle these status codes appropriately:
 | `200 OK` | Request processed successfully |
 | `429 Too Many Requests` | Your plan's per-minute rate limit was exceeded — back off and retry. Not charged against your monthly allowance |
 | `503 Service Unavailable` | Lambda is processing another request — retry with backoff |
+| `500 Internal Server Error` (no `Message`) | The endpoint was busy with another request and your call never ran — retry with backoff (safe even for writes) |
 | `401 Unauthorized` | Invalid or missing API key |
 
 ## Implementation Guidelines
@@ -58,6 +59,8 @@ When implementing your client, handle these status codes appropriately:
 ### 1. Implement Retry Logic with Exponential Backoff
 
 When you receive a 429 or 503 response, implement exponential backoff retry logic.
+
+A `500` whose body carries **no** `Message` means the endpoint was busy and your request never reached it: retry it the same way. A `500` that **does** carry a `Message` was answered by the endpoint itself — read the message before retrying a write, it may already have been applied.
 
 ```javascript
 /* JavaScript Example */
